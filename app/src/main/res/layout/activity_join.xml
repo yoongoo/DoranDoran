@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_join"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#54C242"
+    tools:context="com.doraesol.dorandoran.JoinActivity">
+
+    <TextView
+        android:text="도란도란"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView"
+        android:layout_marginTop="9dp"
+        android:textSize="59sp"
+        android:textColor="#FFFFFF"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/emailInput"
+        android:layout_centerHorizontal="true"
+        android:hint="아이디"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="15dp"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/passwordInput"
+        android:layout_centerHorizontal="true"
+        android:hint="비밀번호"
+        android:layout_marginTop="125dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/nameInput"
+        android:layout_centerHorizontal="true"
+        android:hint="이름"
+        android:layout_marginTop="194dp"
+        android:layout_marginLeft="15dp"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/birthdayInput"
+        android:layout_centerHorizontal="true"
+        android:hint="생년월일(ex :19920902)"
+        android:layout_marginTop="252dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/emailconfirmInput"
+        android:layout_centerHorizontal="true"
+        android:hint="본인 확인 이메일(선택)"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/orientation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="380dp"
+        android:padding="10px" >
+
+        <RadioButton
+            android:id="@+id/horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="100dp"
+            />
+
+        <RadioButton
+            android:id="@+id/vertical"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="50dp"
+            />
+
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/img_user_man"
+        android:id="@+id/imageView"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="50dp"/>
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/img_user_woman"
+        android:id="@+id/imageView2"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="130dp"/>
+
+    <Button
+        android:layout_width="267dp"
+        android:layout_height="45dp"
+        android:text="가입하기"
+        android:id="@+id/signupButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="40dp"
+   />
+
+
+</RelativeLayout>
