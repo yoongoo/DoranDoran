@@ -1,5 +1,6 @@
 package com.doraesol.dorandoran;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ImageSpan;
+import android.view.Window;
+import android.view.WindowManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

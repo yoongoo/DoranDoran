@@ -1,13 +1,80 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.doraesol.dorandoran.HomeFragment">
+    tools:context="com.doraesol.dorandoran.HomeFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/iv_home_user"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:paddingTop="30dp"
+            android:paddingLeft="15dp"
+            android:src="@drawable/img_main_user"/>
+
+        <TextView
+            android:id="@+id/tv_home_user"
+            android:textSize="22dp"
+            android:hint="개인신상정보(이름, 나이, 직업)"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/iv_home_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a5a5a5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:id="@+id/tv_home_family"
+            android:textSize="22dp"
+            android:hint="문파 가계도 정보"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a5a5a5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iv_home_doctor"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:paddingTop="30dp"
+            android:paddingLeft="15dp"
+            android:src="@drawable/img_main_doctor"/>
+
+        <TextView
+            android:id="@+id/tv_home_info"
+            android:textSize="22dp"
+            android:hint="유전병 및 질병 내역"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/iv_home_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
