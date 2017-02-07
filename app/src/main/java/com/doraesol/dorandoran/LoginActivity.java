@@ -17,8 +17,7 @@ import static android.R.attr.onClick;
 public class LoginActivity extends AppCompatActivity
 {
     @BindView(R.id.iv_login)   ImageView iv_login;
-    //메인화면으로
-    //@BindView(R.id.bt_login)    ImageButton bt_login;
+    @BindView(R.id.bt_login)    ImageButton bt_login;
     @BindView(R.id.bt_signup) ImageButton bt_signup;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,14 +30,14 @@ public class LoginActivity extends AppCompatActivity
     }
 
     //메인화면으로
-    /*@OnClick(R.id.bt_login)
+    @OnClick(R.id.bt_login)
     public void login()
     {
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class); // 다음 넘어갈 클래스 지정
         startActivity(intent); // 다음 화면으로 넘어간다
-    }*/
+    }
 
     @OnClick(R.id.bt_signup)
     public void signup()
