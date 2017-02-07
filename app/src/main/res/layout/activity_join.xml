@@ -8,64 +8,68 @@
     android:background="#54C242"
     tools:context="com.doraesol.dorandoran.JoinActivity">
 
-    <TextView
-        android:text="도란도란"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/iv_title"
+        android:src="@drawable/img_join_title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView"
-        android:layout_marginTop="9dp"
-        android:textSize="59sp"
-        android:textColor="#FFFFFF"
-        />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/emailInput"
+        android:id="@+id/ip_id"
         android:layout_centerHorizontal="true"
         android:hint="아이디"
-        android:layout_marginTop="70dp"
+        android:textColorHint="@color/white"
+        android:layout_marginTop="150dp"
         android:layout_marginLeft="15dp"/>
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/passwordInput"
+        android:id="@+id/ip_password"
         android:layout_centerHorizontal="true"
         android:hint="비밀번호"
-        android:layout_marginTop="125dp"
-        android:layout_marginLeft="15dp"
+        android:textColorHint="@color/white"
+        android:layout_below="@+id/ip_id"
+        android:layout_alignLeft="@+id/ip_id"
         />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/nameInput"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/ip_name"
         android:hint="이름"
-        android:layout_marginTop="194dp"
-        android:layout_marginLeft="15dp"/>
+        android:textColorHint="@color/white"
+        android:layout_below="@+id/ip_password"
+        android:layout_alignLeft="@+id/ip_id"/>
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/birthdayInput"
+        android:id="@+id/ip_birth"
         android:layout_centerHorizontal="true"
         android:hint="생년월일(ex :19920902)"
-        android:layout_marginTop="252dp"
-        android:layout_marginLeft="15dp"
+        android:textColorHint="@color/white"
+        android:layout_below="@+id/ip_name"
+        android:layout_alignLeft="@+id/ip_id"
         />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/emailconfirmInput"
+        android:id="@+id/ip_emailconfirm"
         android:layout_centerHorizontal="true"
         android:hint="본인 확인 이메일(선택)"
-        android:layout_marginTop="300dp"
-        android:layout_marginLeft="15dp"
+        android:textColorHint="@color/white"
+        android:layout_below="@+id/ip_birth"
+        android:layout_alignLeft="@+id/ip_id"
         />
 
     <RadioGroup
@@ -73,21 +77,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="430dp"
         android:padding="10px" >
 
         <RadioButton
-            android:id="@+id/horizontal"
+            android:id="@+id/radio_boy"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="130dp"
+            android:buttonTint="@color/white"
             />
 
         <RadioButton
-            android:id="@+id/vertical"
+            android:id="@+id/radio_girl"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_marginLeft="50dp"
+            android:buttonTint="@color/white"
             />
 
     </RadioGroup>
@@ -96,27 +102,33 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@drawable/img_user_man"
-        android:id="@+id/imageView"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="50dp"/>
+        android:id="@+id/iv_boy"
+        android:layout_below="@+id/ip_emailconfirm"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/ip_id"
+        android:layout_marginLeft="50dp"
+        />
 
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@drawable/img_user_woman"
-        android:id="@+id/imageView2"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="130dp"/>
+        android:id="@+id/iv_girl"
+        android:layout_below="@+id/ip_emailconfirm"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/ip_id"
+        android:layout_marginLeft="130dp"
+        />
 
-    <Button
-        android:layout_width="267dp"
-        android:layout_height="45dp"
-        android:text="가입하기"
-        android:id="@+id/signupButton"
-        android:textAllCaps="false"
-        android:layout_marginTop="450dp"
-        android:layout_marginLeft="40dp"
-   />
-
+    <ImageButton
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/img_join_sign"
+        android:id="@+id/bt_sign"
+        android:layout_below="@+id/ip_emailconfirm"
+        android:layout_marginTop="100dp"
+        android:layout_alignLeft="@+id/ip_id"
+        android:layout_marginLeft="20dp"
+        />
 
 </RelativeLayout>

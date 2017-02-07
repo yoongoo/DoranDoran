@@ -9,49 +9,52 @@
     tools:context="com.doraesol.dorandoran.LoginActivity">
 
     <ImageView
-        android:layout_width="218dp"
-        android:layout_height="218dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         android:src="@drawable/img_log_sprout"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="71dp"
         android:id="@+id/iv_login" />
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/emailInput"
+        android:id="@+id/ip_id"
         android:layout_centerHorizontal="true"
-        android:hint="Email"
-        android:layout_marginTop="287dp"
+        android:hint="아이디"
+        android:textColorHint="@color/white"
+        android:layout_marginTop="300dp"
         android:layout_marginLeft="15dp"/>
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:id="@+id/passwordInput"
+        android:id="@+id/ip_password"
         android:layout_centerHorizontal="true"
-        android:hint="Password"
-        android:layout_marginTop="363dp"
+        android:hint="비밀번호"
+        android:textColorHint="@color/white"
+        android:layout_marginTop="380dp"
         android:layout_marginLeft="15dp"
         />
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:text="Log in"
-        android:id="@+id/loginButton"
-        android:textAllCaps="false"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/passwordInput"
-        android:layout_toLeftOf="@+id/signupButton" />
 
-    <Button
+    <ImageButton
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:text="Sign up"
-        android:id="@+id/signupButton"
+        app:srcCompat="@drawable/img_login_login"
         android:textAllCaps="false"
-        android:layout_alignTop="@+id/loginButton"
-        android:layout_alignRight="@+id/passwordInput" />
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/ip_password"
+        android:layout_toLeftOf="@+id/bt_signup"
+        android:id="@+id/bt_login" />
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        app:srcCompat="@drawable/img_login_signup"
+        android:textAllCaps="false"
+        android:layout_alignTop="@+id/bt_login"
+        android:layout_alignRight="@+id/ip_password"
+        android:id="@+id/bt_signup" />
 
 
 </RelativeLayout>
