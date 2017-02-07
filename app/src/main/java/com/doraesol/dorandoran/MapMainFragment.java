@@ -6,12 +6,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapMainFragment extends Fragment {
+public class MapMainFragment extends Fragment implements OnMapReadyCallback{
+
+    private GoogleMap m_googleMap;
+    private MapView m_mapView;
+
+
+    static final LatLng LOCATION_SEOUL = new LatLng(37.56, 126.97);
 
 
     public MapMainFragment() {
@@ -22,8 +32,17 @@ public class MapMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_map_main, container, false);
+        m_mapView = (MapView) rootView.findViewById(R.id.google_map);
+        m_mapView.onCreate(savedInstanceState);
+        m_mapView.onResume();
+        m_mapView.getMapAsync(this);
+
+        return rootView;
     }
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+    }
 }

@@ -50,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        for(int i=0; i<tabLayout.getTabCount(); i++)
-        {
+        for(int i=0; i<tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
     }
