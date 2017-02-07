@@ -19,6 +19,7 @@ public class LoginActivity extends AppCompatActivity
     @BindView(R.id.iv_login)   ImageView iv_login;
     @BindView(R.id.bt_login)    ImageButton bt_login;
     @BindView(R.id.bt_signup) ImageButton bt_signup;
+    boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,8 +37,12 @@ public class LoginActivity extends AppCompatActivity
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class); // 다음 넘어갈 클래스 지정
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent); // 다음 화면으로 넘어간다
+        finish();
+
     }
+
 
     @OnClick(R.id.bt_signup)
     public void signup()
