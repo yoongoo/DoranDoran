@@ -30,8 +30,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
-
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCJ6stxPIzCiBGjEJ7AznpO7rlZj0vSv7s"/>
