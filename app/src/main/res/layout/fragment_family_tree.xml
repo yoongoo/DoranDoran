@@ -3,14 +3,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="com.doraesol.dorandoran.FamilyTreeFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:src="@drawable/img_user_man"
-        android:id="@+id/iv_fm_bg" />
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/fbt_plus"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_gravity="bottom|end"
+    android:layout_marginBottom="65dp"
+    android:layout_marginRight="15dp"
+    />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbt_edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="135dp"
+        android:layout_marginRight="15dp"
+        android:visibility="invisible"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbt_father"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="205dp"
+        android:layout_marginRight="15dp"
+        android:visibility="invisible"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbt_mother"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="275dp"
+        android:layout_marginRight="15dp"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/bt_add"
+        android:text="인물추가"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="15dp"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/bt_delete"
+        android:text="인물삭제"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="100dp"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/bt_ok"
+        android:text="수정완료"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="270dp"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/bt_informedit"
+        android:text="정보수정"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="185dp"
+        android:visibility="invisible"
+        />
+
+
 </FrameLayout>
