@@ -14,13 +14,15 @@ import com.doraesol.dorandoran.map.MapMainFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity
+{
+    private BackPressCloseHandler backPressCloseHandler;
     @BindView(R.id.vp_main_pager)   ViewPager viewPager;
     @BindView(R.id.tl_main_tabs)    TabLayout tabLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         int[] tabIcons = {
                 R.drawable.ic_list_home,
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         super.onCreate(savedInstanceState);
+        backPressCloseHandler = new BackPressCloseHandler(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         BusProvider.getInstance().register(this);
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onDestroy() {
         BusProvider.getInstance().unregister(this);
@@ -63,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         BusProvider.getInstance().post(new ActivityResultEvent(requestCode, resultCode, data));
+}
+
+
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
 
 
