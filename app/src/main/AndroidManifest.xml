@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doraesol.dorandoran">
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateAlwaysVisible">
-        </activity>
-
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-
-        <activity android:name=".JoinActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".JoinActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCJ6stxPIzCiBGjEJ7AznpO7rlZj0vSv7s"/>
+            android:value="AIzaSyCJ6stxPIzCiBGjEJ7AznpO7rlZj0vSv7s" />
+
+        <activity android:name=".map.MapMainListActivity" />
+        <activity android:name=".map.MapMainBookmarkActivity" />
+        <activity android:name=".map.MapMainInsertActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
+
 </manifest>

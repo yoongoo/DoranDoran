@@ -1,7 +1,6 @@
 package com.doraesol.dorandoran;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,11 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.ImageSpan;
-import android.view.Window;
-import android.view.WindowManager;
+
+import com.doraesol.dorandoran.map.MapMainFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        BusProvider.getInstance().register(this);
+
 
         Fragment[] arrFragments = new Fragment[5];
         arrFragments[0] = new HomeFragment();
@@ -53,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        BusProvider.getInstance().unregister(this);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        BusProvider.getInstance().post(new ActivityResultEvent(requestCode, resultCode, data));
     }
 
 

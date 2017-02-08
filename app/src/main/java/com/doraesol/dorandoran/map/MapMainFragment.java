@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.support.design.widget.TabLayout;
 import android.widget.Toast;
-
 import com.doraesol.dorandoran.ActivityResultEvent;
 import com.doraesol.dorandoran.BusProvider;
 import com.doraesol.dorandoran.R;
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Subscribe;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
