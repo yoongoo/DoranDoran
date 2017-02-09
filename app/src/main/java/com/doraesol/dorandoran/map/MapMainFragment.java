@@ -38,6 +38,7 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback {
 
     public MapMainFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -49,7 +50,8 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback {
         m_mapView.onResume();
         m_mapView.getMapAsync(this);
         ButterKnife.bind(this, rootView);
-        BusProvider.getInstance().register(this);
+        //BusProvider.getInstance().register(this);
+
 
         tl_map_tabs.addTab(tl_map_tabs.newTab().setText("신규등록").setIcon(R.drawable.ic_map_target));
         tl_map_tabs.addTab(tl_map_tabs.newTab().setText("경로목록").setIcon(R.drawable.ic_map_list));

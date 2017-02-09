@@ -54,12 +54,9 @@ public class FamilyTreeFragment extends Fragment
         FabRClockwise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise);
         FabRanticlockwise = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_anticlockwise);
 
-        fbt_plus.setOnClickListener(new View.OnClickListener()
-        {
-
+        fbt_plus.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 if (isOpen) {
                     fbt_father.startAnimation(FabClose);
                     fbt_mother.startAnimation(FabClose);
