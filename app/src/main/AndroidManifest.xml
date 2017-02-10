@@ -19,8 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -34,8 +33,13 @@
 
         <activity android:name=".map.MapMainListActivity" />
         <activity android:name=".map.MapMainBookmarkActivity" />
-        <activity android:name=".map.MapMainInsertActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".map.MapMainInsertActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".setting.SettingMyPageActivity" />
+        <activity android:name=".setting.SettingNoticeActivity" />
+        <activity android:name=".setting.SettingEtcActivity" />
+        <activity android:name=".setting.SettingAlarmActivity"></activity>
     </application>
 
 </manifest>

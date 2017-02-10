@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.doraesol.dorandoran.SettingFragment"
+    tools:context="com.doraesol.dorandoran.setting.SettingFragment"
     android:orientation="vertical">
 
     <View
@@ -11,69 +11,76 @@
         android:background="#58ce45" />
 
     <RelativeLayout
-        android:id="@+id/rl_map_view"
+        android:id="@+id/rl_setting_mypage"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:id="@+id/iv_setting_notice"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_settings_user"
-            android:layout_margin="8dp" />
-
-        <TextView
-            android:id="@+id/tv_setting_notice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="23dp"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="마이페이지"
-            android:gravity="center"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="#54C242" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/iv_setting_mypage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_settings_waring"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_settings_user"
+            android:layout_centerVertical="true"
             android:layout_margin="8dp" />
 
         <TextView
             android:id="@+id/tv_setting_mypage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:paddingLeft="30dp"
+            android:textSize="13dp"
             android:textColor="#000000"
-            android:textStyle="bold"
-            android:text="공지사항 및 버전"
-            android:gravity="center"
-            android:layout_centerVertical="true" />
+            android:text="마이 페이지"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_setting_mypage"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc" />
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_notice"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_setting_notice"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_settings_waring"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/tv_setting_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:textSize="13dp"
+            android:textColor="#000000"
+            android:text="공지사항"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_setting_notice"/>
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="1dp"
+        android:background="#cccccc" />
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/iv_setting_notify"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_settings_bell2"
             android:layout_margin="8dp" />
 
@@ -81,24 +88,30 @@
             android:id="@+id/tv_setting_notify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:paddingLeft="30dp"
+            android:textSize="13dp"
             android:textColor="#000000"
-            android:textStyle="bold"
             android:text="알림"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/iv_setting_notify"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="1dp"
+        android:background="#cccccc" />
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_etc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/iv_setting_etc"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_settings_guitar"
             android:layout_margin="8dp" />
 
@@ -106,23 +119,30 @@
             android:id="@+id/tv_setting_etc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:paddingLeft="30dp"
+            android:textSize="13dp"
             android:textColor="#000000"
-            android:textStyle="bold"
             android:text="기타"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/iv_setting_etc"
             android:layout_centerVertical="true" />
         </RelativeLayout>
 
-    <RelativeLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="1dp"
+        android:background="#cccccc" />
+
+    <RelativeLayout
+        android:id="@+id/rl_setting_logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="90dp">
 
         <ImageView
             android:id="@+id/iv_setting_logout"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_settings_logout2"
             android:layout_margin="8dp" />
 
@@ -130,11 +150,11 @@
             android:id="@+id/tv_setting_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="23dp"
+            android:paddingLeft="30dp"
+            android:textSize="13dp"
             android:textColor="#000000"
-            android:textStyle="bold"
             android:text="로그아웃"
-            android:gravity="center"
+            android:layout_toRightOf="@+id/iv_setting_logout"
             android:layout_centerVertical="true" />
 
         </RelativeLayout>
@@ -145,9 +165,9 @@
         android:background="#54C242" />
 
     <LinearLayout
+        android:id="@+id/rl_setting_store"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="80dp"
         android:background="#d4d4d4"
         android:orientation="vertical"
         android:gravity="center"
@@ -174,20 +194,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="120dp"
         android:orientation="vertical"
         android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="19dp"
+            android:textSize="11dp"
             android:text="충청북도 청주시 서원구 충대로1\n 학연산 공동기술연구원 309호 도래솔"
             android:gravity="center"/>
 
 
         <RelativeLayout
+            android:id="@+id/rl_setting_call"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center">
@@ -195,13 +215,14 @@
             <ImageView
                 android:id="@+id/iv_setting_call"
                 android:src="@drawable/ic_setting_call"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_margin="10dp" />
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"/>
 
             <TextView
                 android:text="010-1234-5678"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/iv_setting_call"
