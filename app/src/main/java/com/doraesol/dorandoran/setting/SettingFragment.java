@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.doraesol.dorandoran.LoginActivity;
 import com.doraesol.dorandoran.R;
 
 import butterknife.BindDimen;
@@ -25,7 +26,7 @@ public class SettingFragment extends Fragment {
     @BindView(R.id.rl_setting_mypage) RelativeLayout rl_setting_mypage;
     @BindView(R.id.rl_setting_notice) RelativeLayout rl_setting_notice;
     @BindView(R.id.rl_setting_alarm)  RelativeLayout rl_setting_alarm;
-    @BindView(R.id.rl_setting_etc)    RelativeLayout rl_setting_etc;
+    @BindView(R.id.rl_setting_logout) RelativeLayout rl_setting_logout;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -46,7 +47,7 @@ public class SettingFragment extends Fragment {
     @OnClick({R.id.rl_setting_mypage,
               R.id.rl_setting_notice,
               R.id.rl_setting_alarm,
-              R.id.rl_setting_etc})
+              R.id.rl_setting_logout})
     public void OnClick(View view){
         switch(view.getId())
         {
@@ -57,10 +58,9 @@ public class SettingFragment extends Fragment {
                 startActivity(new Intent(getActivity(), SettingNoticeActivity.class));
                 break;
             case R.id.rl_setting_alarm:
-                startActivity(new Intent(getActivity(), SettingAlarmActivity.class));
                 break;
-            case R.id.rl_setting_etc:
-                startActivity(new Intent(getActivity(), SettingEtcActivity.class));
+            case R.id.rl_setting_logout:
+                startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;
             default:
                 break;

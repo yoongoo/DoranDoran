@@ -38,8 +38,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
-        <activity android:name=".setting.SettingEtcActivity" />
-        <activity android:name=".setting.SettingAlarmActivity"></activity>
     </application>
 
 </manifest>
