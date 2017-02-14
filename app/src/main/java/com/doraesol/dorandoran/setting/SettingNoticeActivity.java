@@ -51,7 +51,7 @@ public class SettingNoticeActivity extends AppCompatActivity {
         Point point = new Point();
         display.getSize(point);
         int width = point.x;
-        elv_notice_list.setIndicatorBounds(width-200, width-80);
+        elv_notice_list.setIndicatorBounds(width-130, width-40);
         elv_notice_list.setAdapter(adapter);
     }
 

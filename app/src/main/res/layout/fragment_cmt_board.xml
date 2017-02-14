@@ -1,5 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.doraesol.dorandoran.social.CmtBoardFragment">
@@ -9,30 +10,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_post_extend"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="bottom|right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_post_write"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="80dp"
-        android:layout_gravity="bottom|right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible" />
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_cmt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_backgroundColor="#ccb7b7b7">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_post_alarm"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="144dp"
-        android:layout_gravity="bottom|right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
 
-</FrameLayout>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cmt_menu4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="처외가"
+            style="@style/MenuButtonsSmall"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cmt_menu3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="처가"
+            style="@style/MenuButtonsSmall"/>
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cmt_menu2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="외가"
+            style="@style/MenuButtonsSmall"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cmt_menu1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="친가"
+            style="@style/MenuButtonsSmall"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_cmt_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cmt_write"
+            fab:fab_label="글쓰기"
+            style="@style/MenuButtonsSmall"/>
+    </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>

@@ -1,8 +1,8 @@
 package com.doraesol.dorandoran.social;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.doraesol.dorandoran.R;
-
+import com.github.clans.fab.FloatingActionMenu;
+import com.github.clans.fab.FloatingActionButton;
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,13 +27,9 @@ public class CmtBoardFragment extends Fragment {
 
     ArrayList<Cmt.Post> cmtPostList;
     CmtViewAdpater cmtViewAdpater;
-    @BindView(R.id.fab_post_extend)
-    FloatingActionButton fab_post_extend;
-    @BindView(R.id.fab_post_alarm)
-    FloatingActionButton fab_post_alarm;
-    @BindView(R.id.fab_post_write)
-    FloatingActionButton fab_post_write;
-    boolean is_fab_extended = false;
+    @BindView(R.id.fam_cmt)         FloatingActionMenu fam_cmt;
+    @BindView(R.id.fab_cmt_write)   FloatingActionButton fab_cmt_write;
+
 
     public CmtBoardFragment() {
         cmtPostList = new ArrayList<>();
@@ -47,30 +41,7 @@ public class CmtBoardFragment extends Fragment {
         }
     }
 
-    @OnClick({R.id.fab_post_extend, R.id.fab_post_write, R.id.fab_post_alarm})
-    public void OnFabButtonClick(View view)
-    {
-        switch (view.getId()){
-            case R.id.fab_post_extend:
-                if(is_fab_extended) {
-                    fab_post_alarm.setVisibility(View.VISIBLE);
-                    fab_post_write.setVisibility(View.VISIBLE);
-                    is_fab_extended = false;
-                }
-                else {
-                    fab_post_alarm.setVisibility(View.INVISIBLE);
-                    fab_post_write.setVisibility(View.INVISIBLE);
-                    is_fab_extended = true;
-                }
-                break;
-            case R.id.fab_post_write:
-                break;
-            case R.id.fab_post_alarm:
-                break;
-            default:
-                break;
-        }
-    }
+
 
 
     @Override
@@ -83,7 +54,7 @@ public class CmtBoardFragment extends Fragment {
         cmtViewAdpater = new CmtViewAdpater();
         recyclerView.setAdapter(cmtViewAdpater);
         ButterKnife.bind(this, view);
-
+        fam_cmt.setClosedOnTouchOutside(true);
 
         return view;
     }
@@ -142,6 +113,15 @@ public class CmtBoardFragment extends Fragment {
             tv_cmt_like_count = (TextView)itemView.findViewById(R.id.tv_cmt_like_count);
             tv_cmt_comment_count = (TextView)itemView.findViewById(R.id.tv_cmt_comment_count);
             iv_cmt_post = (ImageView)itemView.findViewById(R.id.iv_cmt_post);
+        }
+    }
+
+    @OnClick(R.id.fab_cmt_write)
+    public void onFabButtonClicked(View view){
+        switch(view.getId()){
+            case R.id.fab_cmt_write:
+                startActivity(new Intent(getActivity(), CmtBoardWriteActivity.class));
+                break;
         }
     }
 }

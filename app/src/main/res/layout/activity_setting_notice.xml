@@ -35,10 +35,8 @@
             android:id="@+id/elv_notice_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:groupIndicator="@drawable/toggle_notice_list"
-            android:transcriptMode="alwaysScroll"
-            >
-        </ExpandableListView>
-    </LinearLayout>
+            android:transcriptMode="alwaysScroll" />
+            <!--android:groupIndicator="@drawable/toggle_notice_list" -->
 
+    </LinearLayout>
 </LinearLayout>

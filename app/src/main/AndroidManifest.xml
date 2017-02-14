@@ -38,6 +38,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
+        <activity android:name=".social.CmtBoardWriteActivity"></activity>
     </application>
 
 </manifest>
