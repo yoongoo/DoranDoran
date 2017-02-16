@@ -8,55 +8,76 @@
     android:background="#54C242"
     tools:context="com.doraesol.dorandoran.LoginActivity">
 
-    <ImageView
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:src="@drawable/img_log_sprout"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="71dp"
-        android:id="@+id/iv_login" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="40dp">
+        <ImageView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/img_log_sprout"
+            android:id="@+id/iv_login"
+            android:layout_gravity="center"/>
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:id="@+id/ip_id"
-        android:layout_centerHorizontal="true"
-        android:hint="아이디"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="300dp"
-        android:layout_marginLeft="15dp"
-        android:background="@null"/>
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/ip_id"
+            android:layout_centerHorizontal="true"
+            android:hint="아이디"
+            android:textAlignment="center"
+            android:textColorHint="@color/white"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:background="@null"/>
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:id="@+id/ip_password"
-        android:layout_centerHorizontal="true"
-        android:hint="비밀번호"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="380dp"
-        android:layout_marginLeft="15dp"
-        android:background="@null"
-        />
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/ip_password"
+            android:layout_centerHorizontal="true"
+            android:hint="비밀번호"
+            android:textAlignment="center"
+            android:textColorHint="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="center"
+            android:background="@null"/>
 
-    <ImageButton
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        app:srcCompat="@drawable/img_login_login"
-        android:textAllCaps="false"
-        android:layout_marginTop="60dp"
-        android:layout_below="@+id/ip_password"
-        android:layout_toLeftOf="@+id/bt_signup"
-        android:id="@+id/bt_login" />
 
-    <ImageButton
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        app:srcCompat="@drawable/img_login_signup"
-        android:textAllCaps="false"
-        android:layout_alignTop="@+id/bt_login"
-        android:layout_alignRight="@+id/ip_password"
-        android:id="@+id/bt_signup" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="50dp">
+
+            <Button
+                android:id="@+id/bt_login"
+                android:text="로그인"
+                android:textAlignment="center"
+                android:layout_width="130dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="1dp"/>
+
+            <Button
+                android:id="@+id/bt_signup"
+                android:text="회원가입"
+                android:textAlignment="center"
+                android:layout_width="130dp"
+                android:layout_height="45dp" />
+        </LinearLayout>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_login_google"
+            android:layout_width="261dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+
+        </com.google.android.gms.common.SignInButton>
+
+    </LinearLayout>
 
 
 </RelativeLayout>

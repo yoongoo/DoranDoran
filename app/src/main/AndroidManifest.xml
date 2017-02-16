@@ -2,7 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doraesol.dorandoran">
 
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -20,8 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-        </activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -35,9 +41,13 @@
 
         <activity android:name=".map.MapMainListActivity" />
         <activity android:name=".map.MapMainBookmarkActivity" />
+
         <activity android:name=".map.MapMainInsertActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".map.MapSearchActivity" />
+        <activity android:name=".setting.SettingMyPageActivity" />
+        <activity android:name=".setting.SettingNoticeActivity" />
+        <activity android:name=".social.CmtBoardWriteActivity" />
     </application>
 
 </manifest>

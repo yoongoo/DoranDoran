@@ -15,14 +15,21 @@ import android.widget.Toast;
 
 import com.doraesol.dorandoran.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+
 public class MapMainListActivity extends AppCompatActivity {
 
-    GridView androidGridView;
+    @BindView(R.id.gv_map_list)
+    GridView gv_map_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_main_list);
+        ButterKnife.bind(this);
+
 
         final String[] gridViewString = {
                 "Alram", "Android", "Mobile", "Website", "Profile", "WordPress",
@@ -39,10 +46,8 @@ public class MapMainListActivity extends AppCompatActivity {
         };
 
         MapListGridViewAdpater adapterViewAndroid = new MapListGridViewAdpater(MapMainListActivity.this, gridViewString, gridViewImageId);
-        androidGridView = (GridView)findViewById(R.id.gv_map_list);
-        androidGridView.setAdapter(adapterViewAndroid);
-        androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        gv_map_list.setAdapter(adapterViewAndroid);
+        gv_map_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
@@ -61,6 +66,8 @@ public class MapMainListActivity extends AppCompatActivity {
             this.gridViewString = gridViewString;
             this.gridViewImageId = gridViewImageId;
         }
+
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {

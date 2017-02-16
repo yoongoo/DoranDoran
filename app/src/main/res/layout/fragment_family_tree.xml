@@ -1,92 +1,176 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context="com.doraesol.dorandoran.FamilyTreeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="com.doraesol.dorandoran.FamilyTreeFragment"
+    android:orientation="vertical">
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbt_edit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="135dp"
-        android:layout_marginRight="15dp"
-        android:visibility="invisible"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbt_father"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="205dp"
-        android:layout_marginRight="15dp"
-        android:visibility="invisible"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbt_mother"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="275dp"
-        android:layout_marginRight="15dp"
-        android:visibility="invisible"
-        />
-
-    <Button
-        android:id="@+id/bt_add"
-        android:text="인물추가"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="15dp"
-        android:visibility="invisible"
-        />
-
-    <Button
-        android:id="@+id/bt_delete"
-        android:text="인물삭제"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="100dp"
-        android:visibility="invisible"
-        />
-
-    <Button
-        android:id="@+id/bt_ok"
-        android:text="수정완료"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="270dp"
-        android:visibility="invisible"
-        />
-
-    <Button
-        android:id="@+id/bt_informedit"
-        android:text="정보수정"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="185dp"
-        android:visibility="invisible"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fbt_plus"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="65dp"
-        android:layout_marginRight="15dp"
-        />
+    <LinearLayout
+        android:id="@+id/ll_family_tree"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-</FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        >
+       <TextView
+           android:text="친가"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"
+           android:background="#aa8d8d"
+           android:gravity="center"/>
+        <TextView
+            android:text="처가"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#d62121"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="외가"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#8eff74"
+            android:gravity="center"/>
+        <TextView
+            android:text="처외가"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#4f6df4"
+            android:gravity="center"/>
+    </LinearLayout>
+
+
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/img_family_default"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:text="친가"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"/>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/img_family_default"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:text="외가"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/img_family_default"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:text="처가"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"/>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/img_family_default"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:text="처외가"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp" />
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+ -->
+
+</RelativeLayout>
+
