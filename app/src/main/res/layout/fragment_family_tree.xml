@@ -9,15 +9,6 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-<android.support.design.widget.FloatingActionButton
-    android:id="@+id/fbt_plus"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
-    android:layout_gravity="bottom|end"
-    android:layout_marginBottom="65dp"
-    android:layout_marginRight="15dp"
-    />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fbt_edit"
         android:layout_width="50dp"
@@ -86,6 +77,15 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="185dp"
         android:visibility="invisible"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fbt_plus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="65dp"
+        android:layout_marginRight="15dp"
         />
 
 

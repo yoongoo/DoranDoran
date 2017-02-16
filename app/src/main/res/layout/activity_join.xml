@@ -5,19 +5,17 @@
     android:id="@+id/activity_join"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#54C242"
     tools:context="com.doraesol.dorandoran.JoinActivity">
 
-    <ImageView
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_title"
-        android:background="@drawable/img_join_title"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="도란도란 회원가입"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="60dp"
+        android:textSize="30dp"/>
 
     <EditText
         android:layout_width="300dp"
@@ -27,7 +25,8 @@
         android:hint="아이디"
         android:textColorHint="@color/white"
         android:layout_marginTop="150dp"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"
+        android:background="@null"/>
 
     <EditText
         android:layout_width="300dp"
@@ -38,6 +37,7 @@
         android:textColorHint="@color/white"
         android:layout_below="@+id/ip_id"
         android:layout_alignLeft="@+id/ip_id"
+        android:background="@null"
         />
 
     <EditText
@@ -47,7 +47,8 @@
         android:hint="이름"
         android:textColorHint="@color/white"
         android:layout_below="@+id/ip_password"
-        android:layout_alignLeft="@+id/ip_id"/>
+        android:layout_alignLeft="@+id/ip_id"
+        android:background="@null"/>
 
     <EditText
         android:layout_width="300dp"
@@ -58,6 +59,7 @@
         android:textColorHint="@color/white"
         android:layout_below="@+id/ip_name"
         android:layout_alignLeft="@+id/ip_id"
+        android:background="@null"
         />
 
     <EditText

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doraesol.dorandoran">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -36,6 +37,7 @@
         <activity android:name=".map.MapMainBookmarkActivity" />
         <activity android:name=".map.MapMainInsertActivity"
             android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".map.MapSearchActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_search"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.doraesol.dorandoran.map.MapSearchActivity"
+    android:orientation="vertical"
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+
+
+    <View
+        android:layout_width="254dp"
+        android:layout_height="1dp"
+        android:background="#54C242"
+        android:layout_marginTop="98dp"
+        android:id="@+id/view2" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#54C242"
+        android:layout_marginTop="140dp"
+        android:id="@+id/view" />
+
+    <LinearLayout
+        android:layout_width="253dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/map"
+        android:layout_below="@+id/view3">
+
+        <fragment
+            android:id="@+id/fg_starting"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_weight="0.5"
+            />
+        <fragment
+            android:id="@+id/fg_ending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_weight="0.5"
+            />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="134dp"
+        android:layout_height="87dp"
+        android:text="검색"
+        android:textSize="30dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginLeft="255dp"
+        android:id="@+id/button2"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        android:layout_below="@+id/view"
+        android:name="com.google.android.gms.maps.MapFragment"
+         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#54C242"
+        android:id="@+id/view3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출발점, 도착점 설정"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+

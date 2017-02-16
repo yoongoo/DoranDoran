@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.widget.Toast;
 import com.doraesol.dorandoran.ActivityResultEvent;
 import com.doraesol.dorandoran.BusProvider;
+import com.doraesol.dorandoran.JoinActivity;
 import com.doraesol.dorandoran.R;
 import com.doraesol.dorandoran.config.DataConfig;
 import com.google.android.gms.maps.GoogleMap;
@@ -96,7 +97,10 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback {
 
     @OnClick(R.id.iv_map_search)
     public void OnSearchClick() {
-        Toast.makeText(getActivity(), "검색 버튼 클릭", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(
+               getActivity(), // 현재 화면의 제어권자
+                MapSearchActivity.class); // 다음 넘어갈 클래스 지정
+        startActivity(intent); // 다음 화면으로 넘어간다
     }
 
     @Subscribe

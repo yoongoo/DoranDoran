@@ -24,7 +24,8 @@
         android:hint="아이디"
         android:textColorHint="@color/white"
         android:layout_marginTop="300dp"
-        android:layout_marginLeft="15dp"/>
+        android:layout_marginLeft="15dp"
+        android:background="@null"/>
 
     <EditText
         android:layout_width="300dp"
@@ -35,6 +36,7 @@
         android:textColorHint="@color/white"
         android:layout_marginTop="380dp"
         android:layout_marginLeft="15dp"
+        android:background="@null"
         />
 
     <ImageButton
