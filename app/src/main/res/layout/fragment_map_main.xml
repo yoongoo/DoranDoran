@@ -2,32 +2,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.doraesol.dorandoran.MapMainFragment">
+    tools:context="com.doraesol.dorandoran.map.MapMainFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_map_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="0.9"
+        android:orientation="vertical">
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/google_map"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:name="com.google.android.gms.maps.MapFragment" />
 
-    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_map_search"
+                android:paddingLeft="15dp"
+                android:hint="지역 검색"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9" />
+
+            <ImageView
+                android:id="@+id/iv_map_search"
+                android:src="@drawable/img_map_searcher"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
+        android:layout_height="10dp"
         android:background="#a5a5a5" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="0.5">
 
+        <ImageView
+            android:id="@+id/iv_map_earth"
+            android:src="@drawable/img_map_map2"
+            android:padding="7dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_toRightOf="@+id/iv_map_earth"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:text="현재 위치"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_map_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        app:tabIndicatorHeight="0dp">
+
+    </android.support.design.widget.TabLayout>
 </LinearLayout>

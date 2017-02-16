@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "203101306634",
+    "project_id": "abiding-team-158006"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203101306634:android:2377f472e7017a68",
+        "android_client_info": {
+          "package_name": "com.doraesol.dorandoran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203101306634-7k8d5rb8d1db52tqtb5jn1or8ie9gtvo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doraesol.dorandoran",
+            "certificate_hash": "4F8D6378D45136332379A224C51C3A299A0E59E0"
+          }
+        },
+        {
+          "client_id": "203101306634-lumvn3eiqsjjgungo6igtkic24k66b32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjK4p0uH7_OcHPdaDcrOBSDGhA8dxfUQQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

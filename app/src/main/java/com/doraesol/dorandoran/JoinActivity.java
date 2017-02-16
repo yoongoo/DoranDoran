@@ -19,8 +19,6 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         ButterKnife.bind(this);
-
-
     }
     @OnClick(R.id.bt_sign)
     public void sign()
