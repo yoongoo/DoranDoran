@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DoranDoran.iml" filepath="$PROJECT_DIR$/DoranDoran.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/doran.iml" filepath="$PROJECT_DIR$/doran.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dorandoran.iml" filepath="$PROJECT_DIR$/dorandoran.iml" />
-=======
->>>>>>> 5f3f66e7625435e29a145892a08f66fa929088d5
     </modules>
   </component>
 </project>
