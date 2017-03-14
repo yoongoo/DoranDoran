@@ -13,21 +13,21 @@
       },
       "oauth_client": [
         {
-          "client_id": "203101306634-7k8d5rb8d1db52tqtb5jn1or8ie9gtvo.apps.googleusercontent.com",
+          "client_id": "203101306634-3hhk3trd7mn5cp1m5s4ggbshrk3bqg79.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.doraesol.dorandoran",
-            "certificate_hash": "4F8D6378D45136332379A224C51C3A299A0E59E0"
+            "certificate_hash": "BAE4B3E00195CEC35DAB6EB666F3FDAEEFBC0FD3"
           }
         },
         {
-          "client_id": "203101306634-lumvn3eiqsjjgungo6igtkic24k66b32.apps.googleusercontent.com",
+          "client_id": "203101306634-6mtcbqa11iaqr5a0b69kvromecqek2bb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAjK4p0uH7_OcHPdaDcrOBSDGhA8dxfUQQ"
+          "current_key": "AIzaSyCLwBEoTtLhx8y2QZ1VS7NIPOyz5VDFJm8"
         }
       ],
       "services": {
