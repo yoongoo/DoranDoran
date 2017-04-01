@@ -27,6 +27,7 @@ public class BackPressCloseHandler extends Activity {
     }
 
 
+
     private void showGuide() {
         toast = Toast.makeText(activity, "뒤로 버튼을 한번 더 터치하시면 종료됩니다.",
                 Toast.LENGTH_SHORT);

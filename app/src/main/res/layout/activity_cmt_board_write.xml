@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="8dp">
 
-            <ImageView
+            <ImageiVew
                 android:id="@+id/iv_cmt_insert_back"
                 android:layout_width="0dp"
                 android:layout_height="30dp"

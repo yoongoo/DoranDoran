@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.doraesol.dorandoran.calendar.CalendarMainFragment;
 import com.doraesol.dorandoran.map.MapMainFragment;
 import com.doraesol.dorandoran.setting.SettingFragment;
 import com.doraesol.dorandoran.social.CmtBoardFragment;
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity
         arrFragments[0] = new HomeFragment();
         arrFragments[1] = new FamilyTreeFragment();
         arrFragments[2] = new MapMainFragment();
-        arrFragments[3] = new CmtBoardFragment();
+        //arrFragments[3] = new CmtBoardFragment();
+        arrFragments[3] = new CalendarMainFragment();
         arrFragments[4] = new SettingFragment();
 
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), arrFragments);
