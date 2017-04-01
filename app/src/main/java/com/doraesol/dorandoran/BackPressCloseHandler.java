@@ -10,7 +10,7 @@ public class BackPressCloseHandler extends Activity {
     private long backKeyPressedTime = 0;
     private Toast toast;
     private Activity activity;
-    public BackPressCloseHandler(MainActivity context) {
+    public BackPressCloseHandler(MenuActivity context) {
         this.activity = context;
     }
 

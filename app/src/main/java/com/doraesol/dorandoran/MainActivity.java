@@ -18,14 +18,14 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
 {
-    private BackPressCloseHandler backPressCloseHandler;
     @BindView(R.id.vp_main_pager)   ViewPager viewPager;
     @BindView(R.id.tl_main_tabs)    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
+        Intent intent = getIntent();
+        int page = intent.getExtras().getInt("page");
         int[] tabIcons = {
                 R.drawable.ic_list_home,
                 R.drawable.ic_list_genogram,
@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity
         };
 
         super.onCreate(savedInstanceState);
-        backPressCloseHandler = new BackPressCloseHandler(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         BusProvider.getInstance().register(this);
@@ -51,7 +50,9 @@ public class MainActivity extends AppCompatActivity
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), arrFragments);
 
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(page, true);
         tabLayout.setupWithViewPager(viewPager);
+
 
         for(int i=0; i<tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
@@ -72,9 +73,6 @@ public class MainActivity extends AppCompatActivity
 }
 
 
-    public void onBackPressed() {
-        backPressCloseHandler.onBackPressed();
-    }
 
 
     class MainPagerAdapter extends FragmentPagerAdapter {
