@@ -45,7 +45,7 @@ public class MenuActivity extends AppCompatActivity
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class);// 다음 넘어갈 클래스 지정
-        intent.putExtra("page", 1);
+        intent.putExtra("page", 0);
         startActivity(intent); // 다음 화면으로 넘어간다
     }
     @OnClick(R.id.map_bt)
@@ -54,7 +54,7 @@ public class MenuActivity extends AppCompatActivity
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class); // 다음 넘어갈 클래스 지정
-        intent.putExtra("page", 2);
+        intent.putExtra("page", 1);
         startActivity(intent); // 다음 화면으로 넘어간다
     }
     @OnClick(R.id.calendar_bt)
@@ -63,7 +63,7 @@ public class MenuActivity extends AppCompatActivity
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class); // 다음 넘어갈 클래스 지정
-        intent.putExtra("page", 3);
+        intent.putExtra("page", 2);
         startActivity(intent); // 다음 화면으로 넘어간다
     }
     @OnClick(R.id.setting_bt)
@@ -72,7 +72,7 @@ public class MenuActivity extends AppCompatActivity
         Intent intent = new Intent(
                 getApplicationContext(), // 현재 화면의 제어권자
                 MainActivity.class); // 다음 넘어갈 클래스 지정
-        intent.putExtra("page", 4);
+        intent.putExtra("page", 3);
         startActivity(intent); // 다음 화면으로 넘어간다
     }
 }

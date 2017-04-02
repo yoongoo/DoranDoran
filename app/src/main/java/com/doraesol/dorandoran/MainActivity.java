@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         int page = intent.getExtras().getInt("page");
         int[] tabIcons = {
-                R.drawable.ic_list_home,
+                //R.drawable.ic_list_home,
                 R.drawable.ic_list_genogram,
                 R.drawable.ic_list_map,
                 R.drawable.ic_list_social,
@@ -41,13 +41,13 @@ public class MainActivity extends AppCompatActivity
         BusProvider.getInstance().register(this);
 
 
-        Fragment[] arrFragments = new Fragment[5];
-        arrFragments[0] = new HomeFragment();
-        arrFragments[1] = new FamilyTreeFragment();
-        arrFragments[2] = new MapMainFragment();
+        Fragment[] arrFragments = new Fragment[4];
+       // arrFragments[0] = new HomeFragment();
+        arrFragments[0] = new FamilyTreeFragment();
+        arrFragments[1] = new MapMainFragment();
         //arrFragments[3] = new CmtBoardFragment();
-        arrFragments[3] = new CalendarMainFragment();
-        arrFragments[4] = new SettingFragment();
+        arrFragments[2] = new CalendarMainFragment();
+        arrFragments[3] = new SettingFragment();
 
         MainPagerAdapter adapter = new MainPagerAdapter(getSupportFragmentManager(), arrFragments);
 
@@ -92,14 +92,12 @@ public class MainActivity extends AppCompatActivity
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "HOME";
+                    return "FAMILYTREE";
                 case 1:
-                    return "TREEMAP";
-                case 2:
                     return "MAP";
+                case 2:
+                    return "CALENDAR";
                 case 3:
-                    return "SOCIAL";
-                case 4:
                     return "SETTING";
                 default:
                     return "";

@@ -3,6 +3,7 @@ package com.doraesol.dorandoran.map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class MapMainFragment extends Fragment implements OnMapReadyCallback {
-
+    final String LOG_TAG = MapMainFragment.class.getSimpleName();
     private GoogleMap m_googleMap;
     private MapView m_mapView;
     @BindView(R.id.iv_map_search) ImageView iv_map_search;
@@ -109,11 +110,20 @@ public class MapMainFragment extends Fragment implements OnMapReadyCallback {
     public void onActivityResult(ActivityResultEvent activityResultEvent){
         onActivityResult(activityResultEvent.getRequestCode(), activityResultEvent.getResultCode(), activityResultEvent.getData());
 
+        String resultData = activityResultEvent.getData().getStringExtra("name");
+        Log.d(LOG_TAG, "resultData : " + resultData);
+
+
         // 경로목록
         if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_LIST) {
         }
         // 즐겨찾기
         else if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_BOOKMARK) {
+        }
+        // 경로 추가
+        else if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_INSERT){
+            Toast.makeText(getContext(), resultData , Toast.LENGTH_SHORT).show();
+            Log.d(LOG_TAG, "resultData : " + resultData);
         }
     }
 }

@@ -23,7 +23,7 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:id="@+id/ip_id"
+            android:id="@+id/et_login_id"
             android:layout_centerHorizontal="true"
             android:hint="아이디"
             android:textAlignment="center"
@@ -35,7 +35,7 @@
         <EditText
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:id="@+id/ip_password"
+            android:id="@+id/et_login_pw"
             android:layout_centerHorizontal="true"
             android:hint="비밀번호"
             android:textAlignment="center"

@@ -51,6 +51,19 @@
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
         <activity android:name=".social.CmtBoardWriteActivity" />
+
+        <service android:name=".fcm.FCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".FamilyTreeSearchActivity"></activity>
     </application>
 
 </manifest>

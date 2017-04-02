@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,165 +13,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
     </LinearLayout>
 
-    <LinearLayout
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_familytree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        >
-       <TextView
-           android:text="친가"
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:layout_weight="1"
-           android:background="#aa8d8d"
-           android:gravity="center"/>
-        <TextView
-            android:text="처가"
-            android:layout_width="0dp"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="30dp"
+        android:paddingLeft="10dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_backgroundColor="#ccb7b7b7">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_chinga"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#d62121"
-            android:gravity="center"/>
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="친가"
+            style="@style/MenuButtonsSmall"/>
 
-        <TextView
-            android:text="외가"
-            android:layout_width="0dp"
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_churga"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#8eff74"
-            android:gravity="center"/>
-        <TextView
-            android:text="처외가"
-            android:layout_width="0dp"
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="처가"
+            style="@style/MenuButtonsSmall"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_weiga"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#4f6df4"
-            android:gravity="center"/>
-    </LinearLayout>
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="외가"
+            style="@style/MenuButtonsSmall"/>
 
-
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <LinearLayout
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_churweiga"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="처외가"
+            style="@style/MenuButtonsSmall"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/img_family_default"
-                app:civ_border_width="1dp" />
-
-            <TextView
-                android:text="친가"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp"/>
-
-
-
-        </LinearLayout>
-        <LinearLayout
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_search"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="인맥 찾기"
+            style="@style/MenuButtonsSmall"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/img_family_default"
-                app:civ_border_width="1dp" />
+    </com.github.clans.fab.FloatingActionMenu>
 
-            <TextView
-                android:text="외가"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp"/>
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/img_family_default"
-                app:civ_border_width="1dp" />
-
-            <TextView
-                android:text="처가"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp"/>
-
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/img_family_default"
-                app:civ_border_width="1dp" />
-
-            <TextView
-                android:text="처외가"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="20dp" />
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>
- -->
 
 </RelativeLayout>
 
