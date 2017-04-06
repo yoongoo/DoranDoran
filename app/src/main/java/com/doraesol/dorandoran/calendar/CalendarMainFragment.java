@@ -39,7 +39,7 @@ public class CalendarMainFragment extends Fragment {
     final String LOG_TAG = CalendarMainFragment.class.getSimpleName();
     CompactCalendarView compactCalendarView;
     Calendar currentCalender = Calendar.getInstance(Locale.KOREAN);
-    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("YYYY년 MM월", Locale.KOREAN);
+    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("년 MM월", Locale.KOREAN);
     @BindView(R.id.iv_calendar_month_prev)  ImageView iv_calendar_moth_prev;
     @BindView(R.id.iv_calendar_month_next)  ImageView getIv_calendar_moth_next;
     @BindView(R.id.tv_calendar_month)       TextView tv_calendar_month;

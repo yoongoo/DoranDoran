@@ -2,86 +2,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.doraesol.dorandoran.map.MapMainFragment">
 
     <LinearLayout
         android:id="@+id/rl_map_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.9"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/google_map"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:name="com.google.android.gms.maps.MapFragment" />
-
+            android:layout_height="1dp"
+            android:background="#54C242"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/et_map_search"
-                android:paddingLeft="15dp"
-                android:hint="지역 검색"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.9" />
+            <fragment
+                android:id="@+id/fg_search"
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#54C242"/>
 
             <ImageView
                 android:id="@+id/iv_map_search"
                 android:src="@drawable/img_map_searcher"
                 android:layout_gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_weight="0.1"/>
 
-
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#54C242"/>
 
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
+            <com.google.android.gms.maps.MapView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.MapFragment"
+                />
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fam_cmt_write"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                fab:menu_labels_ellipsize="end"
+                fab:menu_labels_singleLine="true"
+                fab:menu_backgroundColor="#ccb7b7b7">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_map_insert_new"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_map_new"
+                    fab:fab_label="신규등록"
+                    style="@style/MenuButtonsSmall"/>
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_map_insert_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_map_list"
+                    fab:fab_label="경로목록"
+                    android:scaleType="centerInside"
+                    style="@style/MenuButtonsSmall"/>
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_map_insert_bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_map_bookmark"
+                    fab:fab_label="즐겨찾기"
+                    android:scaleType="centerInside"
+                    style="@style/MenuButtonsSmall"/>
+            </com.github.clans.fab.FloatingActionMenu>
+        </RelativeLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#a5a5a5" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5">
-
-        <ImageView
-            android:id="@+id/iv_map_earth"
-            android:src="@drawable/img_map_map2"
-            android:padding="7dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-
-        <TextView
-            android:layout_toRightOf="@+id/iv_map_earth"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:text="현재 위치"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </RelativeLayout>
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tl_map_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15"
-        app:tabIndicatorHeight="0dp">
-
-    </android.support.design.widget.TabLayout>
 </LinearLayout>

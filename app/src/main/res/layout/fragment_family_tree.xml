@@ -15,7 +15,15 @@
 
 
     </LinearLayout>
-
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="ㄴㄷㅌ"
+        android:textSize="25dp"
+        android:id="@+id/sex"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

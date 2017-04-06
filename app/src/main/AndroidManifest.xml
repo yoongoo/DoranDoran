@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -37,7 +38,9 @@
         <activity
             android:name=".MenuActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
+        <activity
+            android:name=".map.MapMainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCJ6stxPIzCiBGjEJ7AznpO7rlZj0vSv7s" />
@@ -47,10 +50,12 @@
         <activity
             android:name=".map.MapMainInsertActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".map.MapSearchActivity" />
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
         <activity android:name=".social.CmtBoardWriteActivity" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

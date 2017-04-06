@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
-import com.doraesol.dorandoran.map.MapMainFragment;
-import com.doraesol.dorandoran.setting.SettingFragment;
-import com.doraesol.dorandoran.social.CmtBoardFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.doraesol.dorandoran.map.MapMainFragment">
+
+    <LinearLayout
+        android:id="@+id/rl_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#54C242"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:src="@drawable/img_menu_title"
+                android:id="@+id/img_title"
+                android:visibility="visible"/>
+
+            <fragment
+                android:id="@+id/fg_search"
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#54C242"/>
+
+            <ImageButton
+                android:id="@+id/iv_map_search"
+                android:src="@drawable/img_map_searcher"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#54C242"/>
+
+        <fragment
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            android:layout_weight="0.9"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/myCoordinatorLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            >
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
+</LinearLayout>
