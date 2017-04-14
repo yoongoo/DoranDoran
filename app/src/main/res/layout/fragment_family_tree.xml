@@ -4,15 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.doraesol.dorandoran.FamilyTreeFragment"
-    android:orientation="vertical">
+    tools:context="com.doraesol.dorandoran.familytree.FamilyTreeFragment"
+    >
 
     <LinearLayout
         android:id="@+id/ll_family_tree"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/wv_familytree"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </WebView>
+
     </LinearLayout>
 
 
@@ -30,36 +37,21 @@
         fab:menu_backgroundColor="#ccb7b7b7">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_familytree_chinga"
+            android:id="@+id/fab_familytree_insert_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_settings_user"
-            fab:fab_label="친가"
+            fab:fab_label="추가 모드"
             style="@style/MenuButtonsSmall"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_familytree_churga"
+            android:id="@+id/fab_familytree_edit_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_settings_user"
-            fab:fab_label="처가"
+            fab:fab_label="수정 모드"
             style="@style/MenuButtonsSmall"/>
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_familytree_weiga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings_user"
-            fab:fab_label="외가"
-            style="@style/MenuButtonsSmall"/>
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_familytree_churweiga"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_settings_user"
-            fab:fab_label="처외가"
-            style="@style/MenuButtonsSmall"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_familytree_search"
@@ -68,6 +60,7 @@
             android:src="@drawable/ic_settings_user"
             fab:fab_label="인맥 찾기"
             style="@style/MenuButtonsSmall"/>
+
 
     </com.github.clans.fab.FloatingActionMenu>
 

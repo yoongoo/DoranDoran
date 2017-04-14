@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#54C242</color>
     <color name="colorAccent">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="tab_background_selected">#54C242</color>
+    <color name="tab_background_selected">#ffffff</color>
     <color name="tab_background_unselected">#ffffff</color>
-    <color name="tab_indicator_color">#000000</color>
+    <color name="tab_indicator_color">#54C242</color>
+    <color name="tool_bar_color">#54C242</color>
 </resources>

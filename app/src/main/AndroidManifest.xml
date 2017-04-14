@@ -51,6 +51,7 @@
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
         <activity android:name=".social.CmtBoardWriteActivity" />
+        <activity android:name=".FamilyTreeSearchActivity" />
 
         <service android:name=".fcm.FCMService">
             <intent-filter>
@@ -63,7 +64,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".FamilyTreeSearchActivity"></activity>
+        <activity android:name=".familytree.FamilyTreeNodeInfo"></activity>
     </application>
 
 </manifest>

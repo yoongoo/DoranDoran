@@ -11,4 +11,5 @@ public class Server {
     public static final String GET_USER             = SERVER_CONNECTION + "get_user.php";
     public static final String SEND_MESSAGE_TO_USER = SERVER_CONNECTION + "send_message.php";
 
+    public static final String CONNETION_FAMILYTREE_UI = "file:///android_asset/familytree/index.html";
 }

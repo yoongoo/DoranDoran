@@ -14,7 +14,6 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.doraesol.dorandoran.R;
-import com.google.android.gms.vision.text.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
