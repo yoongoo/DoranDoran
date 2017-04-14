@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.doraesol.dorandoran.MainActivity;
 import com.doraesol.dorandoran.R;
 import com.doraesol.dorandoran.calendar.CalendarMainFragment;
 import com.doraesol.dorandoran.map.MapMainFragment;
@@ -43,16 +46,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -65,7 +70,6 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -77,6 +81,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Handler;
 
 
 public class MapMainActivity extends AppCompatActivity
@@ -84,8 +89,7 @@ public class MapMainActivity extends AppCompatActivity
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener,
-        GoogleMap.OnMapClickListener {
-
+        GoogleMap.OnMapLongClickListener {
 
     private GoogleApiClient mGoogleApiClient = null;
     private GoogleMap mGoogleMap = null;
@@ -109,8 +113,10 @@ public class MapMainActivity extends AppCompatActivity
     private AppCompatActivity mActivity;
     boolean askPermissionOnceAgain = false;
 
-    @BindView(R.id.iv_map_search)
-    ImageButton iv_map_search;
+    @BindView(R.id.iv_map_search) ImageButton iv_map_search;
+    @BindView(R.id.fam_map_menu)           FloatingActionMenu fam_map_menu;
+    @BindView(R.id.fab_map_insert_recording)  FloatingActionButton fab_map_insert_recording;
+    @BindView(R.id.fab_map_insert_list)  FloatingActionButton fab_map_insert_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +129,16 @@ public class MapMainActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ButterKnife.bind(this);
+
+        String string = "묘지 위치에 꾸~욱 눌러 주세요~";
+        final Toast toast = Toast.makeText(this, string, Toast.LENGTH_LONG);
+        View toastView = toast.getView();
+        toastView.setBackgroundColor(Color.parseColor("#B354C242"));
+        TextView toastText = new TextView(this);
+        toastText.setTextColor(Color.parseColor("#FFFFFF"));
+        toast.show();
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.fg_search);
@@ -150,7 +166,7 @@ public class MapMainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapClick(LatLng point)
+    public void onMapLongClick(LatLng point)
     {
 
         //역지오코딩
@@ -200,7 +216,7 @@ public class MapMainActivity extends AppCompatActivity
                     }
                 });
         View view = snack.getView();
-        view.setBackgroundColor(Color.parseColor("#54C242"));
+        view.setBackgroundColor(Color.parseColor("#B354C242"));
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snack.show();
@@ -211,6 +227,27 @@ public class MapMainActivity extends AppCompatActivity
         iv_map_search.setVisibility(View.VISIBLE);
     }
 
+    @OnClick({R.id.fab_map_insert_recording, R.id.fab_map_insert_list})
+    public void OnFabMapClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.fab_map_insert_recording:
+
+                Intent intent1 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MapRecordActivity.class);// 다음 넘어갈 클래스 지정
+                startActivity(intent1); // 다음 화면으로 넘어간다
+                break;
+
+            case R.id.fab_map_insert_list:
+                Intent intent2 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MapListActivity.class);// 다음 넘어갈 클래스 지정
+                startActivity(intent2); // 다음 화면으로 넘어간다
+                break;
+        }
+    }
 
     @Override
     protected void onStart() {
@@ -271,7 +308,7 @@ public class MapMainActivity extends AppCompatActivity
 
             if (mGoogleApiClient.isConnected()) {
                 LocationServices.FusedLocationApi
-                        .removeLocationUpdates(mGoogleApiClient, this);
+                        .removeLocationUpdates(mGoogleApiClient, (LocationListener) this);
                 mGoogleApiClient.disconnect();
             }
 
@@ -285,8 +322,8 @@ public class MapMainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
 
         mGoogleMap = map;
-        mGoogleMap.setOnMapClickListener(this);
-
+        mGoogleMap.setOnMapLongClickListener(this);
+        fam_map_menu.setClosedOnTouchOutside(true);
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
         setCurrentLocation(null, "위치정보 가져올 수 없음", "위치 퍼미션과 GPS 활성 요부 확인하세요");

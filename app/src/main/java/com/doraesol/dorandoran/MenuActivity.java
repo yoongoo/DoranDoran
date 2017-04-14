@@ -3,7 +3,10 @@ package com.doraesol.dorandoran;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.doraesol.dorandoran.map.MapRecordActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +38,45 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
-    @OnClick(R.id.familytree_bt)
+    @OnClick({R.id.familytree_bt, R.id.map_bt, R.id.calendar_bt, R.id.setting_bt})
+    public void OnButtonClicked(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.familytree_bt:
+                Intent intent1 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MainActivity.class);// 다음 넘어갈 클래스 지정
+                intent1.putExtra("page", 1);
+                startActivity(intent1); // 다음 화면으로 넘어간다
+                break;
+
+            case R.id.map_bt:
+                Intent intent2 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MainActivity.class); // 다음 넘어갈 클래스 지정
+                intent2.putExtra("page", 2);
+                startActivity(intent2); // 다음 화면으로 넘어간다
+                break;
+
+            case R.id.calendar_bt:
+                Intent intent3 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MainActivity.class); // 다음 넘어갈 클래스 지정
+                intent3.putExtra("page", 3);
+                startActivity(intent3); // 다음 화면으로 넘어간다
+                break;
+
+            case R.id.setting_bt:
+                Intent intent4 = new Intent(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        MainActivity.class); // 다음 넘어갈 클래스 지정
+                intent4.putExtra("page", 4);
+                startActivity(intent4); // 다음 화면으로 넘어간다
+                break;
+        }
+    }
+    /*@OnClick(R.id.familytree_bt)
     public void OnFamilyButtonClicked()
     {
         Intent intent = new Intent(
@@ -70,5 +111,5 @@ public class MenuActivity extends AppCompatActivity
                 MainActivity.class); // 다음 넘어갈 클래스 지정
         intent.putExtra("page", 4);
         startActivity(intent); // 다음 화면으로 넘어간다
-    }
+    }*/
 }

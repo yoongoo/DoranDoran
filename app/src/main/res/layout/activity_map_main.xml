@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.doraesol.dorandoran.map.MapMainFragment">
 
@@ -19,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="#54C242">
 
 
             <ImageView
@@ -54,23 +55,61 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="#54C242"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <fragment
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/map"
-            android:layout_weight="0.9"
-            android:name="com.google.android.gms.maps.SupportMapFragment" />
+            <fragment
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map"
+                android:layout_weight="0.9"
+                android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fam_map_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                fab:menu_icon="@drawable/ic_star"
+                fab:menu_labels_ellipsize="end"
+                fab:menu_labels_singleLine="true"
+                fab:menu_colorNormal="#54C242"
+                fab:menu_colorPressed="#2E7D32"
+                fab:menu_colorRipple="#1B5E20"
+                fab:menu_backgroundColor="#CCb7b7b7">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_map_insert_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_map_list"
+                    fab:fab_label="경로 목록"
+                    style="@style/MenuButtonsSmall.Green"/>
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_map_insert_recording"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_map_recording"
+                    fab:fab_label="녹화 하기"
+                    style="@style/MenuButtonsSmall.Green"/>
+
+            </com.github.clans.fab.FloatingActionMenu>
+        </RelativeLayout>
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/myCoordinatorLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            >
+            android:layout_weight="0.1">
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>

@@ -19,11 +19,11 @@
         <activity
             android:name=".IntroActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".MainActivity"
@@ -40,6 +40,18 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".map.MapMainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".map.MapRecordActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".map.MapListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -53,6 +65,7 @@
         <activity android:name=".setting.SettingMyPageActivity" />
         <activity android:name=".setting.SettingNoticeActivity" />
         <activity android:name=".social.CmtBoardWriteActivity" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

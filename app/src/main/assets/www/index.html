@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RecordingMap</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }     
+       #panel {
+        position: absolute;
+        bottom: 5px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+      #panel2 {
+        position: absolute;
+        margin-top: 10px;
+        left: 100px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+      
+    </style>
+    <script>
+var map;
+var pos;
+var pos2;
+var marker;
+var markers = [];
+var geocoder;
+var keycnt=0;
+var keycnt2=0;
+var curLat;
+var curLng;
+var setdb;  
+var poly;
+var path;
+var firstTime=false;
+var firstTime2=false;
+var geoOptions;
+var geoOptions2;
+var flag = false;
+
+function initialize() 
+{
+  var mapOptions = 
+  {
+    zoom: 15
+  };
+
+  geoOptions = 
+  {
+      enableHighAccuracy : true,
+      timeout: 5000,
+      maximumAge: 0
+  };
+
+  geoOptions2 = 
+  {
+      enableHighAccuracy : false,
+      timeout: 5000,
+      maximumAge: 0
+  };
+  
+  geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+
+  var polyOptions = 
+  {
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3
+  };
+
+  poly = new google.maps.Polyline(polyOptions);
+  poly.setMap(map);
+  path = poly.getPath();
+  
+ 
+  if(navigator.geolocation)
+   {
+     firstTime=true;
+     navigator.geolocation.getCurrentPosition(success,error,geoOptions);
+  }else 
+  {
+   
+    handleNoGeolocation(false);
+  }
+}
+
+function getMylocation()
+{
+    firstTime=false;
+    if(navigator.geolocation) 
+    {
+     keycnt=navigator.geolocation.watchPosition(success,error2,geoOptions);
+    } else 
+    {
+      handleNoGeolocation(false);
+    }
+}
+
+ function success(position)
+ {
+      flag = true;
+      curLat=position.coords.latitude;
+         curLng=position.coords.longitude;
+         pos = new google.maps.LatLng(curLat,curLng);
+         if(firstTime){
+             marker = new google.maps.Marker
+             ({
+                map: map,
+                position: pos
+             });
+         reverseGeocode(curLat,curLng);
+         }
+
+         if (flag = true) {path.push(pos);}
+         map.setCenter(pos);  
+  }
+
+ function error(err){
+     switch(err.code){
+             case(0):
+             alert("Unknown");
+             break;
+             case(1):
+             alert("no Permission");
+             break;
+             case(2):
+             alert("no Location info");
+             break;
+             case(3):
+             alert("Time out");
+             if(firstTime){
+             navigator.geolocation.getCurrentPosition(success,error2,geoOptions2);
+             }
+             break;
+ }
+}
+
+function error2(err){
+     handleNoGeolocation(true);
+}
+
+function get(){
+   
+    if(keycnt!=0){
+        navigator.geolocation.clearWatch(keycnt);
+        alert("저장된 DB를 삭제합니다");
+        path.clear();
+        marker2.clear();
+    }else{
+        alert("DB가 없습니다");
+    }
+    keycnt=0;
+}
+
+
+
+
+
+function reverseGeocode(relat,relng){   //for reverse Geocoding
+   
+    var regeocoder = new google.maps.Geocoder();
+    var relatlng=new google.maps.LatLng(relat,relng); 
+    var info = new google.maps.InfoWindow({
+        map: map,
+        position: relatlng
+      });
+   
+   
+    regeocoder.geocode({ 'latLng': relatlng}, function(results, status){
+        if(status == google.maps.GeocoderStatus.OK){
+             
+            if(results[1]){
+                info.setContent(results[1].formatted_address);
+                info.open(map,marker);
+            }else{
+                alert("Geocoder failed due to:"+status);
+            }
+        }
+    });
+   
+}
+
+function handleNoGeolocation(errorFlag) {   
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(35.2, 128.6),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
+
+function codeAddress() {    //for  Geocoding
+    
+  var address = document.getElementById('address').value;
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      var marker2 = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+      var infowindow=new google.maps.InfoWindow({
+          map:map,
+          position: results[0].geometry.location,
+          content:address
+      });
+      infowindow.open(map,marker2);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+
+function getMylocation2()
+{
+    geoOptions = 
+    {
+        enableHighAccuracy : true,
+        timeout: 5000,
+        maximumAge: 0
+    };
+
+    if(navigator.geolocation)
+   {
+     navigator.geolocation.getCurrentPosition(success2,error,geoOptions);
+  }else 
+  {
+   
+    handleNoGeolocation(false);
+  }
+}
+
+ function success2(position)
+ {
+      
+      var curLat2=position.coords.latitude;
+      var curLng2=position.coords.longitude;
+      pos2 = new google.maps.LatLng(curLat2,curLng2);
+      var marker2 = new google.maps.Marker
+             ({
+                map: map,
+                position: pos2
+             });
+             markers.push(marker2);
+
+      var contentString = '<div id = "content">'+
+        '<h1 id = "firstHeading" class = "firstHeading">랜드마크</h1>'+
+        '<div id = "bodyContent">'+
+        '<IMG BORDER="0" ALIGN="center" SRC="home.png" width = "100" height"100"/>'+
+        '<br/>'+
+        '<input type="button" value="사진촬영" onclick="callAndroid()"/>'+
+        '<input type="button" value="갤러리" onclick=""/>'+
+        '<input type="button" value="수정" onclick=""/>'+
+        '</div>'+
+        '</div>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString 
+        });
+
+        marker2.addListener('click', function() {
+          infowindow.open(map, marker2);
+        });
+
+  }
+
+  function removeMarkers()
+  {
+    for(i=0; i<markers.length; i++){
+        markers[i].setMap(null);
+    }
+  }
+
+  function callAndroid()
+  {
+    window.call.callAndroid();
+  }
+
+
+//google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqhmXRI2ZB6JDjdT8DO_KUtxpPoNNmkNE&callback=initialize" type="text/javascript"></script>
+  </head>
+
+  <body>
+   <div id="panel2">
+    <input type="textbox" value="서울">
+    <input type="button" value="검색" onclick="codeAddress()">
+   </div>
+      <div id="panel">
+      <input type="button" value="녹화" onclick="getMylocation()">
+      <input type="button" value="저장" onclick="getMylocation2()">
+      <input type="button" value="삭제" onclick="removeMarkers()">
+    </div>
+    <div id="map-canvas"></div>
+  </body>
+</html>
