@@ -5,13 +5,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
@@ -23,47 +28,53 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doraesol.dorandoran.R;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 
 /**
  * Created by JJY on 2017-04-11.
  */
 
-public class MapRecordActivity extends AppCompatActivity implements GeolocationPermissions.Callback
-{
+public class MapRecordActivity extends AppCompatActivity implements GeolocationPermissions.Callback {
     final int REQUEST_PICTURE = 1000;
     WebView mapview;
-    String url="file:///android_asset/www/index.html";
+    String htmlurl = "file:///android_asset/www/index.html";
     Uri uri = null;
+    String imagePath = "";
     private final Handler handler = new Handler();
 
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_record);
 
-        mapview=(WebView) findViewById(R.id.mapview);	//casting webview
-        mapview.getSettings().setJavaScriptEnabled(true);						//webview options
+        mapview = (WebView) findViewById(R.id.mapview);    //casting webview
+        mapview.getSettings().setJavaScriptEnabled(true);                        //webview options
         mapview.getSettings().setGeolocationEnabled(true);
-        mapview.getSettings().setDatabasePath("/data/data/"+this.getPackageName()+"/databases/");
+        mapview.getSettings().setDatabasePath("/data/data/" + this.getPackageName() + "/databases/");
         mapview.getSettings().setDomStorageEnabled(true);
         mapview.getSettings().setDatabaseEnabled(true);
         mapview.getSettings().setAppCacheEnabled(true);
 
-        Geoclient geoclient=new Geoclient();	//casting class
+        Geoclient geoclient = new Geoclient();    //casting class
 
-        mapview.setWebChromeClient(geoclient);	//set webchromeclient for permission
-        String origin="";
-        geoclient.onGeolocationPermissionsShowPrompt(origin,this);	//for permission
+        mapview.setWebChromeClient(geoclient);    //set webchromeclient for permission
+        String origin = "";
+        geoclient.onGeolocationPermissionsShowPrompt(origin, this);    //for permission
         mapview.addJavascriptInterface(new JJJavaScriptInterface(), "call");
-        mapview.loadUrl(url);
-
+        mapview.loadUrl(htmlurl);
     }
 
     @Override
-    public void invoke(String origin, boolean allow, boolean retain) {}
+    public void invoke(String origin, boolean allow, boolean retain) {
+    }
 
-    class Geoclient extends WebChromeClient
-    {    //for display mylocation
+    class Geoclient extends WebChromeClient {    //for display mylocation
         @Override
         public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
 
@@ -82,26 +93,33 @@ public class MapRecordActivity extends AppCompatActivity implements GeolocationP
 
     }
 
-    public  class JJJavaScriptInterface
-    {
-        public JJJavaScriptInterface(){}
+    public class JJJavaScriptInterface {
+        public JJJavaScriptInterface() {  }
 
         @JavascriptInterface
-        public void callAndroid()
-        {
+        public void callCamera() {
             handler.post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     startCameraActivity();
                     Toast.makeText(MapRecordActivity.this, "찰칵~ 찰칵~", Toast.LENGTH_SHORT).show();
                 }
             });
         }
         @JavascriptInterface
-        public void callCamera()
+        public void callGallery()
         {
+            int permissionCheck = ContextCompat.checkSelfPermission(MapRecordActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
 
+            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                startGallery();
+            } else {
+                ActivityCompat.requestPermissions(MapRecordActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        2000);
+            }
+            Toast.makeText(MapRecordActivity.this, "사진첩", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -114,14 +132,25 @@ public class MapRecordActivity extends AppCompatActivity implements GeolocationP
         if (requestCode == REQUEST_PICTURE && resultCode == Activity.RESULT_OK)
         {
             Log.d("onActivityResult", "Camera SUCCESS");
+            String filename = "ho.png";
             uri = data.getData();
-
         }
     }
 
-    public void startCameraActivity() {
+    public void startCameraActivity()
+    {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
+        if (cameraIntent.resolveActivity(this.getPackageManager()) != null)
+        {
+            startActivityForResult(cameraIntent, REQUEST_PICTURE);
+        }
+    }
+
+    public void startGallery() {
+        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        cameraIntent.setType("image*//*");
+        if (cameraIntent.resolveActivity(this.getPackageManager()) != null)
+        {
             startActivityForResult(cameraIntent, REQUEST_PICTURE);
         }
     }

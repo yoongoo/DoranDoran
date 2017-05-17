@@ -135,7 +135,7 @@ public class MapMainActivity extends AppCompatActivity
         String string = "묘지 위치에 꾸~욱 눌러 주세요~";
         final Toast toast = Toast.makeText(this, string, Toast.LENGTH_LONG);
         View toastView = toast.getView();
-        toastView.setBackgroundColor(Color.parseColor("#B354C242"));
+        toastView.setBackgroundColor(Color.parseColor("#CC54C242"));
         TextView toastText = new TextView(this);
         toastText.setTextColor(Color.parseColor("#FFFFFF"));
         toast.show();
@@ -201,10 +201,10 @@ public class MapMainActivity extends AppCompatActivity
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
         }
 
-        String s = " \" " +st +"\" 입니다. 저장 할래?";
+        String s = " \" " +st +"\" 입니다. 저장 하시겠습니까?";
         Snackbar snack = Snackbar.make(findViewById(android.R.id.content), s, 10000)
                 .setActionTextColor(Color.parseColor("#FFFFFF"))
-                .setAction("이응이응", new View.OnClickListener()
+                .setAction("네", new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View v)

@@ -176,9 +176,10 @@ public class MapListActivity extends AppCompatActivity
     }
 
     private static final NamedLocation[] LIST_LOCATIONS = new NamedLocation[]{
-            new NamedLocation("국립대전현충원", new LatLng(36.368602, 127.296674)),
-            new NamedLocation("성환공원묘원", new LatLng(36.876560, 127.058865)),
-            new NamedLocation("용인공원묘지", new LatLng(37.296471, 127.254517)),
+            new NamedLocation("기돈맘", new LatLng(37.500126, 126.973689)),
+            new NamedLocation("성준맘", new LatLng(37.500126, 126.973689)),
+            new NamedLocation("재연맘", new LatLng(37.500126, 126.973689)),
+            new NamedLocation("봉진맘", new LatLng(37.500126, 126.973689)),
     };
 
 }
