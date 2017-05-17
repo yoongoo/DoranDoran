@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.doraesol.dorandoran.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -39,9 +42,11 @@ public class CalendarMainFragment extends Fragment {
     final String LOG_TAG = CalendarMainFragment.class.getSimpleName();
     CompactCalendarView compactCalendarView;
     Calendar currentCalender = Calendar.getInstance(Locale.KOREAN);
-    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("년 MM월", Locale.KOREAN);
+
+    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("yyyy년 MM월", Locale.KOREAN);
+
     @BindView(R.id.iv_calendar_month_prev)  ImageView iv_calendar_moth_prev;
-    @BindView(R.id.iv_calendar_month_next)  ImageView getIv_calendar_moth_next;
+    @BindView(R.id.iv_calendar_month_next)  ImageView iv_calendar_moth_next;
     @BindView(R.id.tv_calendar_month)       TextView tv_calendar_month;
     @BindView(R.id.lv_calendar_schedule)    ListView lv_calendar_schedule;
 
@@ -56,32 +61,37 @@ public class CalendarMainFragment extends Fragment {
         // Inflate the layout for this fragment
         final List<String> scheduleList = new ArrayList<>();
         final View rootView = inflater.inflate(R.layout.fragment_calendar_main, container, false);
+        final ArrayAdapter adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, scheduleList);
         ButterKnife.bind(this, rootView);
+
+        lv_calendar_schedule.setAdapter(adapter);
         compactCalendarView = (CompactCalendarView)rootView.findViewById(R.id.compactcalendar_view);
         compactCalendarView.setLocale(TimeZone.getDefault(), Locale.KOREAN);
 
-        //compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
 
-
-        //Date date = new Date(System.currentTimeMillis());
-        //compactCalendarView.setCurrentDate(date);
-
+        // 그레고리안력으로 변경 후 2017년 4월 6일에 스케쥴 설정
         currentCalender.set(Calendar.ERA, GregorianCalendar.AD);
         currentCalender.set(Calendar.YEAR, 2017);
         currentCalender.set(Calendar.MONTH, Calendar.APRIL);
         currentCalender.add(Calendar.DATE, 5);
+        Event event = new Event(Color.BLUE, currentCalender.getTimeInMillis(), "스케쥴 저장하기");
 
-        Event event = new Event(Color.BLUE, currentCalender.getTimeInMillis(), "저장할 데이터");
+        setToMidnight(currentCalender);
         compactCalendarView.addEvent(event, true);
-        //compactCalendarView.invalidate();
-
-        //addEvents(Calendar.APRIL, 2017);
 
 
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-
+                List<Event> bookingsFromMap = compactCalendarView.getEvents(dateClicked);
+                if (bookingsFromMap != null) {
+                    Log.d(TAG, bookingsFromMap.toString());
+                    scheduleList.clear();
+                    for (Event booking : bookingsFromMap) {
+                        scheduleList.add((String) booking.getData());
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -89,6 +99,8 @@ public class CalendarMainFragment extends Fragment {
                 tv_calendar_month.setText(dateFormatForMonth.format(firstDayOfNewMonth));
             }
         });
+
+
 
         return rootView;
     }

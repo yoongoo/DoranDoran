@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.doraesol.dorandoran.ActivityResultEvent;
 import com.doraesol.dorandoran.MainActivity;
 import com.doraesol.dorandoran.R;
+import com.doraesol.dorandoran.config.DataConfig;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
@@ -26,8 +29,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nhn.android.maps.NMapContext;
-import com.nhn.android.maps.NMapView;
+import com.squareup.otto.Subscribe;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,9 +39,10 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapMainFragment extends Fragment/* implements OnMapReadyCallback*/
-{
-    /*private static final String TAG = "JJY";
+
+public class MapMainFragment extends Fragment implements OnMapReadyCallback {
+    final String LOG_TAG = MapMainFragment.class.getSimpleName();
+    private GoogleMap m_googleMap;
     private MapView m_mapView;
     private Marker marker;
     private GoogleMap mMap;
@@ -86,7 +90,8 @@ public class MapMainFragment extends Fragment/* implements OnMapReadyCallback*/
             @Override
             public void onError(Status status) {
                 // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
+                Log.i(LOG_TAG, "An error occurred: " + status);
+
             }
 
         });
@@ -102,7 +107,28 @@ public class MapMainFragment extends Fragment/* implements OnMapReadyCallback*/
         mMap.addMarker(new MarkerOptions().position(cbnu).title("학연산"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cbnu, 18));
 
-    }*/
+    }
+
+
+    @Subscribe
+    public void onActivityResult(ActivityResultEvent activityResultEvent){
+        onActivityResult(activityResultEvent.getRequestCode(), activityResultEvent.getResultCode(), activityResultEvent.getData());
+        String resultData = activityResultEvent.getData().getStringExtra("name");
+        Log.d(LOG_TAG, "resultData : " + resultData);
+
+
+        // 경로목록
+        if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_LIST) {
+        }
+        // 즐겨찾기
+        else if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_BOOKMARK) {
+        }
+        // 경로 추가
+        else if(activityResultEvent.getRequestCode() == DataConfig.RESULT_MAP_INSERT){
+            Toast.makeText(getContext(), resultData , Toast.LENGTH_SHORT).show();
+            Log.d(LOG_TAG, "resultData : " + resultData);
+        }
+    }
 
 }
 

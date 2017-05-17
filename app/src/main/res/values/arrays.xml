@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="nodelist">
+        <item>부</item>
+        <item>모</item>
+        <item>남편</item>
+        <item>아내</item>
+        <item>형제</item>
+        <item>자매</item>
+        <item>아들</item>
+        <item>딸</item>
+        <item>삭제</item>
+    </string-array>
+
+</resources>

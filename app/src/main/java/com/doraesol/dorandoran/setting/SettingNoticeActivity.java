@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.doraesol.dorandoran.R;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
