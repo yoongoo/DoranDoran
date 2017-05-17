@@ -9,6 +9,8 @@
 
     toJS_addMember = toAndroid_addMember;
     toJS_setfamilyTreeMode = toAndroid_setFamilyTreeMode;
+    toJS_setSelecetedMemberInfo = toAndroid_setSelecetedMemberInfo;
+    toJS_getCurrentFamilyTreeInfo = toAndroid_getCurrentFamilyTreeInfo;
 
     // 공유 데이터 
     var rootDiv = '';
@@ -31,7 +33,7 @@
     var object = new Object();
     var rut = null;
     var parent = null;
-    var mode = 'InsertMode';
+    var mode = 'EditMode';
 
 
     $.fn.pk_family = function(options) {
@@ -298,6 +300,7 @@
         $(options_menu).appendTo(rootDiv);
 
     }
+
     function createNewMemberForm() {
         var memberForm = $('<div>').attr('id', 'pk-memberForm');
         var cross = $('<div>').attr('class', 'pk-cross');
@@ -533,7 +536,17 @@
         }
     }
 
+    // 현재 가계도 JSON 인코딩 후 안드로이드로 보내기
+    function toAndroid_getCurrentFamilyTreeInfo(){
+        var jsonData = createSendURL();
+        jsonData = jsonData.replace(new RegExp(']', 'g'), "");
+        jsonData = jsonData.replace(new RegExp('\\[', 'g'), "");
+        //console.log(jsonData);
 
+        window.to_Android.getCurrentFamilyTreeInfo(jsonData);
+    }
+
+    // 안드로이드에서 노드 클릭 시 호출되는 함수
     function toAndroid_onFamilyTreeNodeClicked(paramMember, paramMsg) {
         toAndroid_SelectedMember(paramMember);
 
@@ -541,20 +554,39 @@
             window.to_Android.onFamilyTreeNodeClicked(paramMsg);
         }
         else if(mode == 'EditMode'){
-            var name    = $(paramMember).attr('data-name');
-            var age     = $(paramMember).attr('data-age');
-            var gender  = $(paramMember).attr('data-gender');
-            var relation= $(paramMember).attr('data-relation');
-            var image   = 'no image';
-            image       = $(paramMember).children('center')
-                                        .children('img')
-                                        .attr('src');
-
-            window.to_Android.getFamilyTreeNodeInfo(name, age, gender, relation, image);
+            toAndroid_getSelectedMemberInfo(paramMember);
         }
     }
 
+    // 현재 선택된 노드 정보 안드로이드로 보내기
+    function toAndroid_getSelectedMemberInfo(paramMember){
+        var name    = $(paramMember).attr('data-name');
+        var age     = $(paramMember).attr('data-age');
+        var gender  = $(paramMember).attr('data-gender');
+        var relation= $(paramMember).attr('data-relation');
+        var image   = 'no image';
+        image       = $(paramMember).children('center')
+            .children('img')
+            .attr('src');
 
+         window.to_Android.getFamilyTreeNodeInfo(name, age, gender, relation, image);
+    }
+
+    // 노드 수정
+    function toAndroid_setSelecetedMemberInfo(name, age, gender, relation){
+        $(selectedMember).attr('data-name', name);
+        $(selectedMember).attr('data-age', age);
+        $(selectedMember).attr('data-gender', gender);
+        $(selectedMember).attr('data-relation', relation);
+
+        var log = $(selectedMember).children('center')
+            .children('span').html(name + ' ('+age+')');
+
+        console.log(log);
+    }
+
+
+    // 추가, 수정 모드 토글
     function toAndroid_setFamilyTreeMode(options){
         if(options == 0){
             mode = 'InsertMode';
@@ -566,12 +598,21 @@
         }
     }
 
-    // 안드로이드에서 호출하는 함수
+    // 노드 추가
     function toAndroid_addMember(options){
         var aLink = $('<a>').attr('href', '#');
         var center = $('<center>').appendTo(aLink);
         var pic = $('<img>').attr('src', 'images/profile.png');
         var extraData = "";
+
+        var arrFamily = new Array('Father', 'Mother', 'Spouse', 'Spouse', 'Sibling', 'Sibling', 'Child', 'Child');
+
+
+        if(options == 8){
+            $('#testString').html('삭제버튼클릭됨');
+            removeMember(selectedMember);
+            return;
+        }
 
         switch (options){
             case 0:
@@ -605,7 +646,7 @@
         $(aLink).attr('data-name', '노드');
         $(aLink).attr('data-gender', 'Male');
         $(aLink).attr('data-age', '26');
-        $(aLink).attr('data-relation', memberRelation);
+        $(aLink).attr('data-relation', arrFamily[options]);
         $(aLink).mousedown(function(event) {
             if (event.button == 0) {
                 //displayPopMenu(this, event);
@@ -628,6 +669,9 @@
                 var parent = $(sParent).parent();
                 var parentParent = $(parent).parent();
                 var ul = $('<ul>').append(li);
+
+
+
                 $(parent).appendTo(li);
                 $(parentParent).append(ul);
             }
@@ -642,6 +686,7 @@
             var parent = $(sParent).parent();
             var parentParent = $(parent).parent();
             var fatherElement = $(parentParent).find("a:first");
+
 
             if(fatherElement.length == 0){
                 console.log('adding adajecent to father');
@@ -662,6 +707,7 @@
         if (options == 2 || options == 3) {
             $('#testString').html('배우자 추가');
             $(aLink).attr('class', 'spouse');
+            memberRelation = 'Spouse';
             var toPrepend = $(sParent).find('a:first');
             $(sParent).prepend(aLink);
             $(sParent).prepend(toPrepend);
@@ -689,6 +735,7 @@
                     $(sParent).append(ul);
                 }
 
+
             }
 
 
@@ -696,7 +743,7 @@
 
     }
 
-
+    // 현재 선택된 노드
     function toAndroid_SelectedMember(paramMember){
         selectedMember = paramMember;
         self = false;

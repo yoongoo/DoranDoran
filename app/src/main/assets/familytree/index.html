@@ -16,27 +16,53 @@ and open the template in the editor.
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
+
+    <!--
         <input type="button" id="sendData" value="send data" onclick="$.send_Family({url: 'save_family.php'})"/>
-        <p id="testString" onclick="javascript:toJS_setFamilyTreeMode(1)">로그가 표시됩니다</p>
+        <p id="testString" onclick="javascript:clearFamilyTreeView()">로그가 표시됩니다</p>
+-->
 
         <div id="pk-family-tree">
         </div>
         <script>
            // $('#pk-family-tree').pk_family();
-           $('#pk-family-tree').pk_family_create(
-             {
-             data: '{"li0":{"a0":{"name":"1","age":"wewe","gender":"Male","pic":"images/profile.png"},"a1":{"name":"2","age":"23","gender":"Female","relation":"Spouse","pic":"images/profile-f.png"},"ul":{"li0":{"a0":{"name":"3","age":"34","gender":"Male","relation":"Child","pic":"images/profile.png"}},"li1":{"a0":{"name":"4","age":"34","gender":"Female","relation":"Child","pic":"images/profile-f.png"}}}}}'
-             }
-             );
 
+
+           $('#pk-family-tree').pk_family_create(
+               {
+                   data:'{"li0":{"a0":{"name":"나","age":"0","gender":"Male","pic":"images/profile.png"}}}'
+               }
+           );
+
+
+           // 노드 추가시
            function toJS_AddMember(options){
                toJS_addMember(options);
            }
 
+           // 모드 변경 시
            function toJS_setFamilyTreeMode(options){
                toJS_setfamilyTreeMode(options);
            }
-           
+
+           // 수정시
+           function toJS_SetSelecetedMemberInfo(name, age, gender, relation){
+               toJS_setSelecetedMemberInfo(name, age, gender, relation);
+           }
+
+           function toJS_GetCurrentFamilyTreeInfo(){
+               toJS_getCurrentFamilyTreeInfo();
+           }
+
+           function loadFamilyTreeView(jsonData){
+               $('#pk-family-tree').empty();
+
+               $('#pk-family-tree').pk_family_create(
+                   {
+                       data:jsonData
+                   }
+               );
+           }
         </script>
     </body>
 </html>

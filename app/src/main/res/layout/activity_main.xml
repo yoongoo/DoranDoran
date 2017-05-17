@@ -14,7 +14,32 @@
         android:id="@+id/tb_main_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/tool_bar_color" >
+        android:background="@color/tool_bar_color"
+        android:contentInsetLeft="0dp"
+        android:contentInsetStart="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:contentInsetRight="0dp"
+        android:contentInsetEnd="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_main_bar_title"
+                android:text="도란도란"
+                android:textSize="17dp"
+                android:textColor="#FFFF"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="12dp"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
 
@@ -23,7 +48,7 @@
         style="@style/MyTabLayout"
         android:id="@+id/tl_main_tabs"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         app:tabBackground="@drawable/tab_color_selector">
     </android.support.design.widget.TabLayout>
 

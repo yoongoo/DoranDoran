@@ -46,7 +46,7 @@ dependencies {
     compile 'com.github.sundeepk:compact-calendar-view:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.github.andyxialm:ColorDialog:1.0.0'
-
+    compile 'com.tsengvn:Typekit:1.0.0'
 
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.5.1'

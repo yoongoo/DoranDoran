@@ -7,5 +7,5 @@
     <color name="tab_background_selected">#ffffff</color>
     <color name="tab_background_unselected">#ffffff</color>
     <color name="tab_indicator_color">#54C242</color>
-    <color name="tool_bar_color">#54C242</color>
+    <color name="tool_bar_color">#49ab39</color>
 </resources>

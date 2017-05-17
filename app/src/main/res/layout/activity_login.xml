@@ -20,29 +20,59 @@
             android:id="@+id/iv_login"
             android:layout_gravity="center"/>
 
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:id="@+id/et_login_id"
-            android:layout_centerHorizontal="true"
-            android:hint="아이디"
-            android:textAlignment="center"
-            android:textColorHint="@color/white"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"
-            android:background="@null"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
 
-        <EditText
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:id="@+id/et_login_pw"
-            android:layout_centerHorizontal="true"
-            android:hint="비밀번호"
-            android:textAlignment="center"
-            android:textColorHint="@color/white"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center"
-            android:background="@null"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_login_id"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"/>
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:id="@+id/et_login_id"
+                android:layout_centerHorizontal="true"
+                android:hint="아이디"
+                android:textAlignment="center"
+                android:textColorHint="@color/white"
+
+                android:layout_gravity="center"
+                android:background="@null"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_login_pw"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30dp"/>
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:id="@+id/et_login_pw"
+                android:layout_centerHorizontal="true"
+                android:hint="비밀번호"
+                android:textAlignment="center"
+                android:textColorHint="@color/white"
+
+                android:layout_gravity="center"
+                android:background="@null"/>
+        </RelativeLayout>
+
+
 
 
         <LinearLayout

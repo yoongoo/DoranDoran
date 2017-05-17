@@ -5,17 +5,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_family_tree_bar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/tool_bar_color"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetEnd="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <TextView
+                    android:text="프로필 수정"
+                    android:textColor="#FFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"/>
+
+             <ImageView
+                 android:id="@+id/iv_family_tree_info_confirm"
+                 android:layout_width="30dp"
+                 android:layout_height="30dp"
+                 android:layout_alignParentRight="true"
+                 android:src="@drawable/img_cmt_insert_confirm"
+                 android:layout_centerInParent="true"
+                 android:layout_marginRight="10dp"
+                 android:padding="3dp"/>
+
+            <ImageView
+                android:id="@+id/iv_family_tree_info_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/img_cmt_insert_back"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:padding="3dp"/>
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.Toolbar>
+
 
         <LinearLayout
             android:id="@+id/ll_family_tree_info_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:background="#67c158"
+            android:background="#69be5a"
             android:orientation="vertical">
 
 
@@ -44,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="10dp">
 
                 <TextView
                     android:text="ID"
@@ -206,7 +263,7 @@
                 android:background="#bcbcbc" />
 
             <LinearLayout
-                android:id="@+id/ll__family_tree_info_birth"
+                android:id="@+id/ll_family_tree_info_birth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

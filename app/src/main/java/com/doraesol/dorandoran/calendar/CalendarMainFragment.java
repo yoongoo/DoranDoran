@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.doraesol.dorandoran.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -95,6 +97,8 @@ public class CalendarMainFragment extends Fragment {
                 tv_calendar_month.setText(dateFormatForMonth.format(firstDayOfNewMonth));
             }
         });
+
+
 
         return rootView;
     }
