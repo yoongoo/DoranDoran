@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         viewPager.setCurrentItem(page, true);
         tabLayout.setupWithViewPager(viewPager);
 
-        
+
         for(int i=0; i<tabLayout.getTabCount(); i++) {
             tabLayout.getTabAt(i).setIcon(tabIcons[i]);
         }
@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-
 
 
         tb_main_bar.setTitle("도란도란");

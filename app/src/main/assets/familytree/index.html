@@ -19,9 +19,8 @@ and open the template in the editor.
 
     <!--
         <input type="button" id="sendData" value="send data" onclick="$.send_Family({url: 'save_family.php'})"/>
-        <p id="testString" onclick="javascript:clearFamilyTreeView()">로그가 표시됩니다</p>
--->
-
+         <p id="testString" onclick="javascript:clearFamilyTreeView()">로그가 표시됩니다</p>
+        -->
         <div id="pk-family-tree">
         </div>
         <script>
@@ -34,6 +33,25 @@ and open the template in the editor.
                }
            );
 
+               function toJS_PrintFamilyTree(jsonData){
+
+                   //toJS_printFamilyTree(jsonData);
+
+                   $('#pk-family-tree').empty();
+
+                   $('#pk-family-tree').pk_family_create(
+                       {
+                           data:jsonData
+                       }
+                   );
+
+
+
+           }
+
+           function TestFunc(){
+               console.log("this is testfunc");
+           }
 
            // 노드 추가시
            function toJS_AddMember(options){
@@ -52,16 +70,6 @@ and open the template in the editor.
 
            function toJS_GetCurrentFamilyTreeInfo(){
                toJS_getCurrentFamilyTreeInfo();
-           }
-
-           function loadFamilyTreeView(jsonData){
-               $('#pk-family-tree').empty();
-
-               $('#pk-family-tree').pk_family_create(
-                   {
-                       data:jsonData
-                   }
-               );
            }
         </script>
     </body>

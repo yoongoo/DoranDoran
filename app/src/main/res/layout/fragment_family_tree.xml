@@ -63,6 +63,14 @@
             fab:fab_label="인맥 찾기"
             style="@style/MenuButtonsSmall"/>
 
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_backup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="가계도 백업"
+            style="@style/MenuButtonsSmall"/>
+
 
     </com.github.clans.fab.FloatingActionMenu>
 

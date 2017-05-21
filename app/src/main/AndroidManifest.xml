@@ -20,6 +20,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAITwEh1klL5HKcf7tEt846zPwepbvTnYI0botbcg" />
+
         <activity
             android:name=".IntroActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -44,14 +49,14 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".map.MapMainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".map.MapRecordActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".map.MapListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCJ6stxPIzCiBGjEJ7AznpO7rlZj0vSv7s" />

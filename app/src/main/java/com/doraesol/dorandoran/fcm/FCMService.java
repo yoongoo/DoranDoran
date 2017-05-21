@@ -10,7 +10,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.doraesol.dorandoran.MainActivity;
+import com.doraesol.dorandoran.MenuActivity;
 import com.doraesol.dorandoran.R;
+import com.doraesol.dorandoran.config.ResultCode;
+import com.doraesol.dorandoran.config.Server;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -21,6 +24,10 @@ import com.google.firebase.messaging.RemoteMessage;
 public class FCMService extends FirebaseMessagingService {
 
     private final String LOG_TAG = FCMService.class.getSimpleName();
+    private final int GET_ACK_PACKET_CODE   = 1000;
+    private final int GET_REQUEST_USER_ID   = 1001;
+    private final int GET_MESSAGE           = 1002;
+    private final int GET_FAMILY_TREE_DATA  = 1003;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -49,8 +56,27 @@ public class FCMService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String messageBody) {
-        String recvMessage = messageBody;
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
+        String recvMessage = "";
+
+        try {
+            recvMessage = getRequestMessage(messageBody, GET_MESSAGE);
+        }catch (NullPointerException ex){
+            Log.d(LOG_TAG, "NullPointerException : " + ex.toString());
+        }
+
+        String packet = getRequestMessage(messageBody, GET_ACK_PACKET_CODE);
+
+        if(packet.equals(Server.REQUEST_USER_FAMILYTREE)){
+            intent.putExtra("REQUEST_CODE", Server.REQUEST_USER_FAMILYTREE);
+            String from_user = getRequestMessage(messageBody, GET_REQUEST_USER_ID);
+            intent.putExtra("FROM_USER", from_user);
+        }
+        else if(packet.equals(Server.RESPONSE_USER_FAMILYTREE)){
+            String json_data = getRequestMessage(messageBody, GET_FAMILY_TREE_DATA);
+            Log.d(LOG_TAG, "가계도 도착 ! " + json_data);
+        }
+
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -68,5 +94,28 @@ public class FCMService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    /* 0 : ACK_PACKET
+     * 1 : REQUEST USER ID
+     * 2 : MESSAGE
+     */
+    private String getRequestMessage(String paramMessage, int flag){
+        String[] tokenMessage = paramMessage.split("#");
+
+        if(flag == GET_ACK_PACKET_CODE){
+            return tokenMessage[0];
+        }
+        else if(flag == GET_REQUEST_USER_ID){
+            return tokenMessage[1];
+        }
+        else if(flag == GET_MESSAGE){
+            return tokenMessage[1] + tokenMessage[2];
+        }
+        else if(flag == GET_FAMILY_TREE_DATA){
+            return tokenMessage[3];
+        }
+
+        return null;
     }
 }

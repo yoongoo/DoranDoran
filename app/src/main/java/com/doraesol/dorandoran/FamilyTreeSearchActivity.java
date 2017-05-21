@@ -47,7 +47,6 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
         lv_searched_users.setAdapter(adapter);
 
         lv_searched_users.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -55,7 +54,7 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
                 String to_user_id = searchedList.get(position);
 
                 SendMessageToUserTask sendMessageToUserTask = new SendMessageToUserTask();
-                sendMessageToUserTask.execute(from_user_id, to_user_id);
+                sendMessageToUserTask.execute(from_user_id, to_user_id, "EMPTY");
 
                 Toast.makeText(getApplicationContext(), from_user_id + " , " + to_user_id, Toast.LENGTH_SHORT).show();
             }
@@ -70,24 +69,30 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
         searchUserTask.execute(target_user);
     }
 
+
+    // 사용자에게 메세지를 보내는 클래스
     class SendMessageToUserTask extends AsyncTask<String, Void, Integer>{
 
         @Override
         protected Integer doInBackground(String... params) {
             String from_user = params[0];
             String to_user = params[1];
+            String message = params[2];
 
             OkHttpClient client = new OkHttpClient();
 
             RequestBody body = new FormBody.Builder()
                     .add("from_user", from_user)
                     .add("to_user", to_user)
+                    .add("json_data", message)
+                    .add("request_code", Server.REQUEST_USER_FAMILYTREE)
                     .build();
 
             Request request = new Request.Builder()
                     .url(Server.SEND_MESSAGE_TO_USER)
                     .post(body)
                     .build();
+
 
             try {
                 Response response = client.newCall(request).execute();
@@ -110,7 +115,10 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
         protected void onPostExecute(Integer resultCode) {
             super.onPostExecute(resultCode);
 
-            Toast.makeText(getApplicationContext(), "status : " + resultCode, Toast.LENGTH_LONG).show();
+            if(resultCode.equals("1000")){
+                Toast.makeText(getApplicationContext(), "Success !", Toast.LENGTH_LONG).show();
+            }
+
 
             /*
             if(resultCode == ResultCode.ACK_RESULT_SUCCESS){

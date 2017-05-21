@@ -69,8 +69,18 @@ public class FamilyTreeFragment extends Fragment {
         ButterKnife.bind(this, view);
         fam_familytree.setClosedOnTouchOutside(true);
         tb_main_bar = (Toolbar) getActivity().findViewById(R.id.tb_main_bar);
-        initalizeFamilyTreeSetting();
+        initializeFamilyTreeSetting();
         BusProvider.getInstance().register(this);
+
+        // 웹뷰가 초기화된 후 호출이 되어야 하기 때문에 1.5초간 딜레이를 줌 향후 개선해야 할 코드임
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                String data = loadCurrentFamilyTreeInfo();
+                executeJsFunction("toJS_PrintFamilyTree", data);
+                Toast.makeText(getActivity().getApplicationContext(), "불러오기..", Toast.LENGTH_LONG).show();
+            }
+        }, 1500);
 
         return view;
     }
@@ -82,7 +92,7 @@ public class FamilyTreeFragment extends Fragment {
         BusProvider.getInstance().unregister(this);
     }
 
-    private void initalizeFamilyTreeSetting(){
+    private void initializeFamilyTreeSetting(){
         wv_familytree.setWebViewClient(new WebViewClient());
         wv_familytree.setWebChromeClient(new WebChromeClient());
         wv_familytree.addJavascriptInterface(new FamilyTreeJSCallBack(), "to_Android");
@@ -93,6 +103,8 @@ public class FamilyTreeFragment extends Fragment {
         webSettings.setBuiltInZoomControls(true);
 
         wv_familytree.loadUrl(Server.CONNETION_FAMILYTREE_UI);
+        Log.d("chromium", "load url : " + Server.CONNETION_FAMILYTREE_UI);
+
 
         tb_main_bar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -154,11 +166,20 @@ public class FamilyTreeFragment extends Fragment {
     private String loadCurrentFamilyTreeInfo(){
         String retJsonData;
         SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        retJsonData = mPref.getString(DataConfig.FAMILY_TREE_INFO, DataConfig.FAMILY_TREE_DEFAULT_DATA);
+        retJsonData = mPref.getString(DataConfig.FAMILY_TREE_INFO, DataConfig.EMPTY_DATA);
+
+        if(retJsonData.equals(DataConfig.EMPTY_DATA)){
+            Log.d("JSONDATA", "invalid Json Data .. ");
+        }
+        else {
+            Log.d("JSONDATA", "valid json data .. ");
+        }
 
         return retJsonData;
     }
 
+
+    // Activity 에서 Fragment로 통신
     @Subscribe
     public void onActivityResultFromFamilyTreeNodeInfo(ActivityResultEvent event){
         String id       = "";
@@ -186,21 +207,46 @@ public class FamilyTreeFragment extends Fragment {
 
     @OnClick({R.id.fab_familytree_insert_mode,
             R.id.fab_familytree_edit_mode,
-            R.id.fab_familytree_search})
+            R.id.fab_familytree_search,
+            R.id.fab_familytree_backup})
     public void onFabButtonClicked(View view){
         tb_main_bar.getMenu().clear();
 
         switch (view.getId()){
+            // 노드 추가 모드
             case R.id.fab_familytree_insert_mode:
                 currentMode = 0;
                 //Toast.makeText(getContext(),"추가 모드 선택", Toast.LENGTH_SHORT).show();
                 tb_main_bar.inflateMenu(R.menu.menu_family_tree);
                 break;
+            // 노드 수정 모드
             case R.id.fab_familytree_edit_mode:
                 currentMode = 1;
                 break;
+            // 인맥 찾기
             case R.id.fab_familytree_search:
                 startActivity(new Intent(getActivity(), FamilyTreeSearchActivity.class));
+                break;
+
+            // 가계도 백업
+            case R.id.fab_familytree_backup:
+                FamilyTreeBackupHelper familyTreeBackupHelper =
+                        new FamilyTreeBackupHelper(getContext());
+                boolean isSucceed = false;
+                String backupData = loadCurrentFamilyTreeInfo();
+
+                isSucceed = familyTreeBackupHelper.saveBackupFile(backupData);
+
+                if(isSucceed){
+                    Toast.makeText(getActivity().getApplicationContext(), "데이터 백업 성공", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity().getApplicationContext(), "데이터 백업 실패", Toast.LENGTH_SHORT).show();
+                }
+
+                familyTreeBackupHelper.getFileNameList();
+
+
                 break;
         }
 
@@ -240,16 +286,15 @@ public class FamilyTreeFragment extends Fragment {
             public void run() {
                 wv_familytree.loadUrl(stringBuilder.toString());
             }
+
         });
 
 
         Log.d("jsfunc", stringBuilder.toString());
     }
 
-    private void loadFamilyTreeFromJson(){
-        String retJson = loadCurrentFamilyTreeInfo();
-
-        executeJsFunction("loadFamilyTreeView", retJson);
+    private void loadFamilyTreeFromJson(String data){
+        executeJsFunction("loadFamilyTreeView", data);
     }
 
     class FamilyTreeJSCallBack {
