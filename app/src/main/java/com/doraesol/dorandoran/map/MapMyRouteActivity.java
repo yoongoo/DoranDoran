@@ -1,37 +1,18 @@
 package com.doraesol.dorandoran.map;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.doraesol.dorandoran.MainActivity;
 import com.doraesol.dorandoran.R;
-import com.doraesol.dorandoran.calendar.CalendarMainFragment;
-import com.doraesol.dorandoran.map.MapMainFragment;
-import com.doraesol.dorandoran.setting.SettingFragment;
-import com.doraesol.dorandoran.social.CmtBoardFragment;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -44,30 +25,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.GeolocationPermissions;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
+import android.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -76,31 +46,35 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Handler;
 
 
-public class MapMainActivity extends AppCompatActivity
+public class MapMyRouteActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,
-        GoogleMap.OnMapLongClickListener {
-
+        GeolocationPermissions.Callback,
+        GoogleMap.OnMapLongClickListener
+{
+    private LatLng currentLocation;
     private GoogleApiClient mGoogleApiClient = null;
     private GoogleMap mGoogleMap = null;
     private Marker currentMarker = null;
-    private Marker searchMarker = null;
-    private LatLng latLng = null;
+    private Location mCurrentLocation;
+    private Marker mCurrLocationMarker;
+    private LocationManager locationManager;
+    private boolean walkState = false;
+    private boolean markerState = false;
+    private boolean markerState2 = false;
+    private LatLng startLatLng = new LatLng(0, 0);        //polyline 시작점
+    private LatLng endLatLng = new LatLng(0, 0);        //polyline 끝점
+    private List<Polyline> polylines;
     private Geocoder geocoder = null;
-
-    private Marker destination;
-
-    final Context context = this;
 
     //디폴트 위치, Seoul
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
@@ -109,14 +83,10 @@ public class MapMainActivity extends AppCompatActivity
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 1000; // 1초
-
-    private AppCompatActivity mActivity;
+    private AppCompatActivity mActivity = null;
     boolean askPermissionOnceAgain = false;
 
-    @BindView(R.id.iv_map_search) ImageButton iv_map_search;
-    @BindView(R.id.fam_map_menu)           FloatingActionMenu fam_map_menu;
-    @BindView(R.id.fab_map_insert_recording)  FloatingActionButton fab_map_insert_recording;
-    @BindView(R.id.fab_map_insert_list)  FloatingActionButton fab_map_insert_list;
+    @BindView(R.id.recording) Button recording;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,62 +94,152 @@ public class MapMainActivity extends AppCompatActivity
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_map_main);
+        setContentView(R.layout.activity_map_my_route);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         ButterKnife.bind(this);
+        startLocationService();
+        polylines = new ArrayList<>();
+    }
 
-        String string = "묘지 위치에 꾸~욱 눌러 주세요~";
-        final Toast toast = Toast.makeText(this, string, Toast.LENGTH_LONG);
-        View toastView = toast.getView();
-        toastView.setBackgroundColor(Color.parseColor("#CC54C242"));
-        TextView toastText = new TextView(this);
-        toastText.setTextColor(Color.parseColor("#FFFFFF"));
-        toast.show();
+    @OnClick(R.id.recording)
+    public void recordButtonClicked()
+    {
+        changeWalkState();
+        String walk = "Walkstate : " + walkState;
+        Log.i("walkstate", walk);
+    }
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.fg_search);
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place1) {
-                // TODO: Get info about the selected place.
-                LatLng latLng = place1.getLatLng();
-                CameraUpdate center = CameraUpdateFactory.newLatLng(latLng);
-                CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
-                mGoogleMap.moveCamera(center);
-                mGoogleMap.animateCamera(zoom);
+    private void changeWalkState()
+    {
+        if (!walkState)
+        {
+            Toast.makeText(getApplicationContext(), "걸음 시작", Toast.LENGTH_SHORT).show();
+            walkState = true;
+            markerState = true;
+            markerState2 = false;
+            startLatLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        }else{
+            Toast.makeText(getApplicationContext(), "걸음 종료", Toast.LENGTH_SHORT).show();
+            walkState = false;
+            markerState = false;
+            markerState2 = true;
+        }
+    }
 
-                mGoogleMap.clear();
-                searchMarker = mGoogleMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+
+        //앱 정보에서 퍼미션을 허가했는지를 다시 검사해봐야 한다.
+        if (askPermissionOnceAgain) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                askPermissionOnceAgain = false;
+                checkPermissions();
             }
+        }
 
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
+    }
 
+    @Override
+    protected void onStop() {
+
+        mGoogleApiClient.disconnect();
+
+        super.onStop();
+
+    }
+
+
+    @Override
+    public void onPause() {
+
+        //위치 업데이트 중지
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+
+            mGoogleApiClient.disconnect();
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.unregisterConnectionCallbacks(this);
+            mGoogleApiClient.unregisterConnectionFailedListener(this);
+        }
+
+        super.onDestroy();
+    }
+
+    private void startLocationService() {
+
+        // get manager instance
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // set listener
+        GPSListener gpsListener = new GPSListener();
+        long minTime = 2000;
+        float minDistance = 0;
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        manager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                minTime,
+                minDistance,
+                gpsListener);
+
+    }
+
+    private void drawPath(){        //polyline을 그려주는 메소드
+        PolylineOptions options = new PolylineOptions()
+                .add(startLatLng)
+                .add(endLatLng)
+                .width(15)
+                .color(Color.RED)
+                .geodesic(true);
+
+        polylines.add(mGoogleMap.addPolyline(options));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 17));
     }
 
     @Override
     public void onMapLongClick(LatLng point)
     {
-
-        //역지오코딩
         String st = null;
-        latLng = point;
         List<Address> addresses = new ArrayList<>();
         geocoder = new Geocoder(this, Locale.getDefault());
-
         //마커찍기
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_rip));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_pmarker));
         markerOptions.position(point);
-        mGoogleMap.clear();
+
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(point));
         mGoogleMap.addMarker(markerOptions);
 
@@ -210,9 +270,8 @@ public class MapMainActivity extends AppCompatActivity
                     public void onClick(View v)
                     {
                         //주소저장
-                        Toast toast = Toast.makeText(MapMainActivity.this, "저장 저장~", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(MapMyRouteActivity.this, "저장 저장~", Toast.LENGTH_SHORT);
                         toast.show();
-
                     }
                 });
         View view = snack.getView();
@@ -222,115 +281,69 @@ public class MapMainActivity extends AppCompatActivity
         snack.show();
     }
 
-    @OnClick(R.id.iv_map_search)
-    public void OnSearchButtonClicked() {
-        iv_map_search.setVisibility(View.VISIBLE);
-    }
-
-    @OnClick({R.id.fab_map_insert_recording, R.id.fab_map_insert_list})
-    public void OnFabMapClicked(View view)
+    private class GPSListener implements LocationListener
     {
-        switch (view.getId())
+        public void onLocationChanged(Location location)
         {
-            case R.id.fab_map_insert_recording:
 
-                Intent intent1 = new Intent(
-                        getApplicationContext(), // 현재 화면의 제어권자
-                        MapMyRouteActivity.class);// 다음 넘어갈 클래스 지정
-                startActivity(intent1); // 다음 화면으로 넘어간다
-                break;
+            //capture location data sent by current provider
+            Double latitude = location.getLatitude();
+            Double longtitude = location.getLongitude();
 
-            case R.id.fab_map_insert_list:
-                Intent intent2 = new Intent(
-                        getApplicationContext(), // 현재 화면의 제어권자
-                        MapListActivity.class);// 다음 넘어갈 클래스 지정
-                startActivity(intent2); // 다음 화면으로 넘어간다
-                break;
-        }
-    }
+            mCurrentLocation = location;
+            if(markerState != false)
+            {
+                String markerTitle = getCurrentAddress(location);
+                String markerSnippet = "시작 위치";
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(latitude, longtitude));
+                markerOptions.title(markerTitle);
+                markerOptions.snippet(markerSnippet);
+                mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                markerState = false;
+            }
+            if(markerState2 != false)
+            {
+                String markerTitle2 = getCurrentAddress(location);
+                String markerSnippet2 = "종료 위치";
+                MarkerOptions markerOptions2 = new MarkerOptions();
+                markerOptions2.position(new LatLng(latitude, longtitude));
+                markerOptions2.title(markerTitle2);
+                markerOptions2.snippet(markerSnippet2);
+                markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                mCurrLocationMarker = mGoogleMap.addMarker(markerOptions2);
+                markerState2 = false;
+            }
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 17));
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-        if (mGoogleApiClient != null)
-            mGoogleApiClient.connect();
-
-        //앱 정보에서 퍼미션을 허가했는지를 다시 검사해봐야 한다.
-        if (askPermissionOnceAgain) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                askPermissionOnceAgain = false;
-
-                checkPermissions();
+            if(walkState){                                           //걸음 시작 버튼이 눌렸을 때
+                endLatLng = new LatLng(latitude, longtitude);        //현재 위치를 끝점으로 설정
+                drawPath();                                          //polyline 그리기
+                startLatLng = new LatLng(latitude, longtitude);      //시작점을 끝점으로 다시 설정
             }
         }
-    }
 
-    @Override
-    protected void onStop() {
-
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-        super.onStop();
-
+        public void onProviderDisabled(String provider) {}
+        public void onProviderEnabled(String provider) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
     }
 
 
-    @Override
-    public void onPause() {
-
-        //위치 업데이트 중지
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-
-            mGoogleApiClient.disconnect();
-        }
-
-        super.onPause();
-    }
 
     @Override
-    protected void onDestroy() {
-
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.unregisterConnectionCallbacks(this);
-            mGoogleApiClient.unregisterConnectionFailedListener(this);
-
-            if (mGoogleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi
-                        .removeLocationUpdates(mGoogleApiClient, (LocationListener) this);
-                mGoogleApiClient.disconnect();
-            }
-
-        }
-
-        super.onDestroy();
-    }
-
-
-    @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap map)
+    {
 
         mGoogleMap = map;
-        mGoogleMap.setOnMapLongClickListener(this);
-        fam_map_menu.setClosedOnTouchOutside(true);
         //런타임 퍼미션 요청 대화상자나 GPS 활성 요청 대화상자 보이기전에
         //지도의 초기위치를 서울로 이동
         setCurrentLocation(null, "위치정보 가져올 수 없음", "위치 퍼미션과 GPS 활성 요부 확인하세요");
-
+        mGoogleMap.setOnMapLongClickListener(this);
         mGoogleMap.getUiSettings().setCompassEnabled(true);
-        //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { //API 23 이상이면 런타임 퍼미션 처리 필요
@@ -338,7 +351,7 @@ public class MapMainActivity extends AppCompatActivity
             int hasFineLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
             if (hasFineLocationPermission == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
             } else {
@@ -364,17 +377,6 @@ public class MapMainActivity extends AppCompatActivity
     }
 
 
-    @Override
-    public void onLocationChanged(Location location) {
-
-        String markerTitle = getCurrentAddress(location);
-        String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
-                + " 경도:" + String.valueOf(location.getLongitude());
-
-        //현재 위치에 마커 생성
-        //setCurrentLocation(location, markerTitle, markerSnippet );
-    }
-
 
     protected synchronized void buildGoogleApiClient() {
 
@@ -394,18 +396,10 @@ public class MapMainActivity extends AppCompatActivity
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
         }
-
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(UPDATE_INTERVAL_MS);
         locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
-
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-
-        }
     }
 
 
@@ -468,7 +462,7 @@ public class MapMainActivity extends AppCompatActivity
 
 
     public boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -481,7 +475,7 @@ public class MapMainActivity extends AppCompatActivity
 
 
         if (location != null) {
-            LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+            currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
             //마커를 원하는 이미지로 변경해줘야함
             MarkerOptions markerOptions = new MarkerOptions();
@@ -492,7 +486,7 @@ public class MapMainActivity extends AppCompatActivity
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             currentMarker = mGoogleMap.addMarker(markerOptions);
 
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             return;
         }
 
@@ -563,7 +557,7 @@ public class MapMainActivity extends AppCompatActivity
     @TargetApi(Build.VERSION_CODES.M)
     private void showDialogForPermission(String msg) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MapMainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapMyRouteActivity.this);
         builder.setTitle("알림");
         builder.setMessage(msg);
         builder.setCancelable(false);
@@ -584,7 +578,7 @@ public class MapMainActivity extends AppCompatActivity
 
     private void showDialogForPermissionSetting(String msg) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MapMainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapMyRouteActivity.this);
         builder.setTitle("알림");
         builder.setMessage(msg);
         builder.setCancelable(true);
@@ -611,7 +605,7 @@ public class MapMainActivity extends AppCompatActivity
     //여기부터는 GPS 활성화를 위한 메소드들
     private void showDialogForLocationServiceSetting() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MapMainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapMyRouteActivity.this);
         builder.setTitle("위치 서비스 비활성화");
         builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
                 + "위치 설정을 수정하실래요?");
@@ -666,5 +660,6 @@ public class MapMainActivity extends AppCompatActivity
     }
 
 
-
+    @Override
+    public void invoke(String origin, boolean allow, boolean retain) {}
 }

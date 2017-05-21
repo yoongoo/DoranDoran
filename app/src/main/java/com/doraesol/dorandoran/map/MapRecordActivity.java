@@ -36,7 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
-
+import com.doraesol.dorandoran.config.Server;
 /**
  * Created by JJY on 2017-04-11.
  */
@@ -44,7 +44,8 @@ import java.net.URI;
 public class MapRecordActivity extends AppCompatActivity implements GeolocationPermissions.Callback {
     final int REQUEST_PICTURE = 1000;
     WebView mapview;
-    String htmlurl = "file:///android_asset/www/index.html";
+    //String htmlurl = "file:///android_asset/www/index.html";
+
     Uri uri = null;
     String imagePath = "";
     private final Handler handler = new Handler();
@@ -67,7 +68,8 @@ public class MapRecordActivity extends AppCompatActivity implements GeolocationP
         String origin = "";
         geoclient.onGeolocationPermissionsShowPrompt(origin, this);    //for permission
         mapview.addJavascriptInterface(new JJJavaScriptInterface(), "call");
-        mapview.loadUrl(htmlurl);
+        //mapview.loadUrl(htmlurl);
+        mapview.loadUrl(Server.CONNETION_GOOGLEMAP_UI);
     }
 
     @Override

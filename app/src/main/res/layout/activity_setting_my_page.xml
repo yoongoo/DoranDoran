@@ -182,10 +182,11 @@
         android:id="@+id/fab_setting_mypage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
+        android:layout_margin="40dp"
         android:src="@drawable/ic_setting_mypage_camera"
         app:backgroundTint="#d8d8d8"
         app:layout_anchor="@id/ll_setting_mypage_top"
         app:layout_anchorGravity="bottom|right" />
+
 
 </android.support.design.widget.CoordinatorLayout>

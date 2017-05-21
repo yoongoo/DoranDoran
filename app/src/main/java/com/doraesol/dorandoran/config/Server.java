@@ -12,4 +12,5 @@ public class Server {
     public static final String SEND_MESSAGE_TO_USER = SERVER_CONNECTION + "send_message.php";
 
     public static final String CONNETION_FAMILYTREE_UI = SERVER_CONNECTION + "familytree/index.html";
+    public static final String CONNETION_GOOGLEMAP_UI = SERVER_CONNECTION + "map/index.html";
 }

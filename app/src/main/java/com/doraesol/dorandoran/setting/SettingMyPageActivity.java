@@ -1,5 +1,6 @@
 package com.doraesol.dorandoran.setting;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +8,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.doraesol.dorandoran.LoginActivity;
 import com.doraesol.dorandoran.R;
+import com.doraesol.dorandoran.map.MapMainActivity;
+import com.google.android.gms.auth.api.Auth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +65,8 @@ public class SettingMyPageActivity extends AppCompatActivity {
     public void onUpdateProfilePicture(){
         printToast("사진 변경 클릭");
     }
+
+
 
     private void printToast(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

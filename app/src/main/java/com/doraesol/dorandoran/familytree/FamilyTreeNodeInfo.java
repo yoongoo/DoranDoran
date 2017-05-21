@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.doraesol.dorandoran.ActivityResultEvent;
 import com.doraesol.dorandoran.BusProvider;
 import com.doraesol.dorandoran.R;
 import com.doraesol.dorandoran.config.ResultCode;
+import com.doraesol.dorandoran.map.MapMainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +32,8 @@ public class FamilyTreeNodeInfo extends AppCompatActivity {
     @BindView(R.id.tv_family_tree_info_relation)TextView tv_family_tree_info_relation;
     @BindView(R.id.tv_family_tree_info_phone)   TextView tv_family_tree_info_phone;
     @BindView(R.id.tv__family_tree_info_birth)  TextView tv_family_tree_info_birth;
-
+    @BindView(R.id.fab_family_tree_info_pic)      FloatingActionButton fab_family_tree_info_pic;
+    @BindView(R.id.fab_family_tree_info_graves)      FloatingActionButton fab_family_tree_info_graves;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,4 +188,23 @@ public class FamilyTreeNodeInfo extends AppCompatActivity {
 
         return retStr;
     }
+
+    @OnClick(R.id.fab_family_tree_info_pic)
+    public void onUpdateProfilePicture(){
+        printToast("사진 변경 클릭");
+    }
+
+    @OnClick(R.id.fab_family_tree_info_graves)
+    public void onGoMap()
+    {
+        printToast("묘지 클릭");
+        Intent intent = new Intent(
+                getApplicationContext(), // 현재 화면의 제어권자
+                MapMainActivity.class); // 다음 넘어갈 클래스 지정
+        startActivity(intent); // 다음 화면으로 넘어간다
+    }
+    private void printToast(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
 }
