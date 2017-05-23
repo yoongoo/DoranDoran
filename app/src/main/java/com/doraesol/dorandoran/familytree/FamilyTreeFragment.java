@@ -235,7 +235,11 @@ public class FamilyTreeFragment extends Fragment {
                 boolean isSucceed = false;
                 String backupData = loadCurrentFamilyTreeInfo();
 
-                isSucceed = familyTreeBackupHelper.saveBackupFile(backupData);
+                // AES256 메세지 암, 복호화
+                String encryptedData = familyTreeBackupHelper.encryptedMessageFromAES256("1111", backupData);
+                String decrpytedData = familyTreeBackupHelper.decryptedMessageFromAES256("1111", encryptedData);
+
+                isSucceed = familyTreeBackupHelper.saveBackupFile(encryptedData);
 
                 if(isSucceed){
                     Toast.makeText(getActivity().getApplicationContext(), "데이터 백업 성공", Toast.LENGTH_SHORT).show();
