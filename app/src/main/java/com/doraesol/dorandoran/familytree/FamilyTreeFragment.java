@@ -1,3 +1,8 @@
+
+
+
+
+
 package com.doraesol.dorandoran.familytree;
 
 
@@ -235,7 +240,11 @@ public class FamilyTreeFragment extends Fragment {
                 boolean isSucceed = false;
                 String backupData = loadCurrentFamilyTreeInfo();
 
-                isSucceed = familyTreeBackupHelper.saveBackupFile(backupData);
+                // AES256 메세지 암, 복호화
+                String encryptedData = familyTreeBackupHelper.encryptedMessageFromAES256("1111", backupData);
+                String decrpytedData = familyTreeBackupHelper.decryptedMessageFromAES256("1111", encryptedData);
+
+                isSucceed = familyTreeBackupHelper.saveBackupFile(encryptedData);
 
                 if(isSucceed){
                     Toast.makeText(getActivity().getApplicationContext(), "데이터 백업 성공", Toast.LENGTH_SHORT).show();
@@ -270,15 +279,15 @@ public class FamilyTreeFragment extends Fragment {
                 .append(paramFuncName)
                 .append("(");
 
-       for(int i=0; i<params.length; i++){
-           if(i == params.length-1) {
-               stringBuilder.append("'"+params[i].toString()+"'");
-               break;
-           }
+        for(int i=0; i<params.length; i++){
+            if(i == params.length-1) {
+                stringBuilder.append("'"+params[i].toString()+"'");
+                break;
+            }
 
-           stringBuilder.append("'"+params[i]+"'").append(',');
-       }
-       stringBuilder.append(')');
+            stringBuilder.append("'"+params[i]+"'").append(',');
+        }
+        stringBuilder.append(')');
 
 
         wv_familytree.post(new Runnable() {
@@ -302,41 +311,41 @@ public class FamilyTreeFragment extends Fragment {
         @JavascriptInterface
         public void onFamilyTreeNodeClicked(String selectedNodeName){
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("선택된 노드 : " + selectedNodeName)
-                        .setItems(R.array.nodelist, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, final int which) {
-                                // JavaScript 메서드는 반드시 메인 스레드에서 호출
-                                wv_familytree.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        wv_familytree.loadUrl("javascript:toJS_AddMember(" + which + ")");
-                                    }
-                                });
-                            }
-                        });
-                // inject TableLayout
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("선택된 노드 : " + selectedNodeName)
+                    .setItems(R.array.nodelist, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, final int which) {
+                            // JavaScript 메서드는 반드시 메인 스레드에서 호출
+                            wv_familytree.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    wv_familytree.loadUrl("javascript:toJS_AddMember(" + which + ")");
+                                }
+                            });
+                        }
+                    });
+            // inject TableLayout
                 /*
                 LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View dlg_family_tree
                         = inflater.inflate(R.layout.dlg_family_tree_insert_node, null);
                 builder.setView(dlg_family_tree);
                 */
-                builder.show();
+            builder.show();
         }
 
         @JavascriptInterface
         public void getFamilyTreeNodeInfo(String paramName, String paramAge, String paramGender, String paramRelation, String paramImage){
 
-                // id, name, age, gender, relation, phone, birth
-                Intent intent = new Intent(getContext(), FamilyTreeNodeInfo.class);
-                intent.putExtra("name", paramName)
-                        .putExtra("age", paramAge)
-                        .putExtra("gender", paramGender)
-                        .putExtra("relation", paramRelation)
-                        .putExtra("image", paramImage);
+            // id, name, age, gender, relation, phone, birth
+            Intent intent = new Intent(getContext(), FamilyTreeNodeInfo.class);
+            intent.putExtra("name", paramName)
+                    .putExtra("age", paramAge)
+                    .putExtra("gender", paramGender)
+                    .putExtra("relation", paramRelation)
+                    .putExtra("image", paramImage);
 
-                startActivity(intent);
+            startActivity(intent);
         }
 
         @JavascriptInterface
@@ -345,5 +354,5 @@ public class FamilyTreeFragment extends Fragment {
 
             Log.d("JSONDATA", loadCurrentFamilyTreeInfo());
         }
-        }
     }
+}
