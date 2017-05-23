@@ -12,14 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <WebView
             android:id="@+id/wv_familytree"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
+            android:layout_height="0dp"
+            android:layout_weight="1.0">
         </WebView>
+
+        <HorizontalScrollView
+            android:id="@+id/hsv_shared_user_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:background="#f0f0f0">
+
+            <LinearLayout
+                android:id="@+id/ll_shared_user_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp">
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
 
     </LinearLayout>
@@ -60,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_settings_user"
-            fab:fab_label="인맥 찾기"
+            fab:fab_label="가계도 불러오기"
             style="@style/MenuButtonsSmall"/>
 
         <com.github.clans.fab.FloatingActionButton

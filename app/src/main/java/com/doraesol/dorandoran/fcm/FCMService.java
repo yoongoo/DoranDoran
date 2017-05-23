@@ -133,6 +133,18 @@ public class FCMService extends FirebaseMessagingService {
     private void saveSharedUserList(String shared_user){
         // 기존에 공유 했던 사용자 목록을 불러와서
         String load_user_list = loadSharedUserList();
+
+        String[] token_user_list = load_user_list.split("#");
+
+
+        for(int i=0; i<token_user_list.length; i++){
+
+            // 기존에 유저가 존재하는 경우 함수를 탈출
+            if(token_user_list[i].equals(shared_user)){
+                return;
+            }
+        }
+
         // 분류 토큰을 넣고 추가시킴
         load_user_list += '#' + shared_user;
 

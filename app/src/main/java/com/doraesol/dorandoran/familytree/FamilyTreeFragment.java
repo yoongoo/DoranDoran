@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,10 +56,16 @@ import butterknife.OnClick;
  */
 public class FamilyTreeFragment extends Fragment {
 
+    final String LOG_TAG = FamilyTreeFragment.class.getSimpleName();
+
     @BindView(R.id.fam_familytree)
     FloatingActionMenu fam_familytree;
     @BindView(R.id.wv_familytree)
     WebView wv_familytree;
+    @BindView(R.id.ll_shared_user_list)
+    LinearLayout ll_shared_user_list;
+    @BindView(R.id.hsv_shared_user_list)
+    HorizontalScrollView hsv_shared_user_list;
 
     Toolbar tb_main_bar;
     int currentMode = 0;
@@ -108,7 +118,9 @@ public class FamilyTreeFragment extends Fragment {
         webSettings.setBuiltInZoomControls(true);
 
         wv_familytree.loadUrl(Server.CONNETION_FAMILYTREE_UI);
+        hsv_shared_user_list.setVisibility(View.GONE);
         Log.d("chromium", "load url : " + Server.CONNETION_FAMILYTREE_UI);
+
 
 
         tb_main_bar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -223,14 +235,18 @@ public class FamilyTreeFragment extends Fragment {
                 currentMode = 0;
                 //Toast.makeText(getContext(),"추가 모드 선택", Toast.LENGTH_SHORT).show();
                 tb_main_bar.inflateMenu(R.menu.menu_family_tree);
+
                 break;
             // 노드 수정 모드
             case R.id.fab_familytree_edit_mode:
                 currentMode = 1;
                 break;
-            // 인맥 찾기
+
+            // 가계도 불러오기
             case R.id.fab_familytree_search:
-                startActivity(new Intent(getActivity(), FamilyTreeSearchActivity.class));
+                //startActivity(new Intent(getActivity(), FamilyTreeSearchActivity.class));
+                hsv_shared_user_list.setVisibility(View.VISIBLE);
+                testFuncHSV();
                 break;
 
             // 가계도 백업
@@ -240,7 +256,7 @@ public class FamilyTreeFragment extends Fragment {
                 boolean isSucceed = false;
                 String backupData = loadCurrentFamilyTreeInfo();
 
-                // AES256 메세지 암, 복호화
+                // AES256 메세지 암, 복호화 - 패스워드 지정 필요
                 String encryptedData = familyTreeBackupHelper.encryptedMessageFromAES256("1111", backupData);
                 String decrpytedData = familyTreeBackupHelper.decryptedMessageFromAES256("1111", encryptedData);
 
@@ -271,7 +287,7 @@ public class FamilyTreeFragment extends Fragment {
     }
 
 
-
+    // 자바스크립트 함수 실행
     public void executeJsFunction(String paramFuncName, Object... params){
 
         final StringBuilder stringBuilder = new StringBuilder();
@@ -302,12 +318,77 @@ public class FamilyTreeFragment extends Fragment {
         Log.d("jsfunc", stringBuilder.toString());
     }
 
+
+    // 공유된 가계도 목록 출력 함수
+    private void createSharedUserData(int paramImgResource, String paramText) throws Exception{
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(280, 280);
+        param.gravity = Gravity.CENTER;
+        final FamilyTreeSharedUser familyTreeSharedUser = new FamilyTreeSharedUser(getContext());
+        familyTreeSharedUser.setLayoutParams(param);
+        familyTreeSharedUser.setImage(paramImgResource);
+        familyTreeSharedUser.setText(paramText);
+
+        familyTreeSharedUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userId = familyTreeSharedUser.getText();
+                String ret_json_data = loadSharedUserJsonData(userId);
+                executeJsFunction("toJS_PrintFamilyTree", ret_json_data);
+                hsv_shared_user_list.setVisibility(View.GONE);
+            }
+        });
+
+        ll_shared_user_list.addView(familyTreeSharedUser);
+    }
+
+    // 공유된 가계도 목록 불러오기
+    private String loadSharedUserList(){
+        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        // data1#data2#data3
+        String shared_user_list = mPref.getString(DataConfig.SHARED_USER_LIST, DataConfig.EMPTY_DATA);
+
+        return shared_user_list;
+    }
+
+    // 아이디를 기반으로 가계도 불러오기
+    private String loadSharedUserJsonData(String paramText){
+        SharedPreferences mPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        // data1#data2#data3
+        String ret_json_data = mPref.getString(paramText, DataConfig.EMPTY_DATA);
+
+        return ret_json_data;
+    }
+
+
+    // 공유 목록 기능 테스트 함수
+    private void testFuncHSV(){
+        try {
+            // 기존의 모든 뷰 제거
+            ll_shared_user_list.removeAllViews();
+
+            String[] shared_user_list = loadSharedUserList().split("#");
+
+            for (String shared_user : shared_user_list) {
+                createSharedUserData(R.drawable.img_shared_user_default, shared_user);
+            }
+        }
+        catch(Exception ex){
+            Log.d(LOG_TAG, ex.toString());
+        }
+    }
+
+
     private void loadFamilyTreeFromJson(String data){
         executeJsFunction("loadFamilyTreeView", data);
     }
 
+
+
+
+
+    // 안드로이드 자바스크립트 통신 규약을 정의한 클래스
     class FamilyTreeJSCallBack {
-        // 추가 모드 - 노드 클릭
+        // 추가 모드 - 노드 클릭시
         @JavascriptInterface
         public void onFamilyTreeNodeClicked(String selectedNodeName){
 
@@ -348,6 +429,7 @@ public class FamilyTreeFragment extends Fragment {
             startActivity(intent);
         }
 
+        // 가계도 데이터를 JSON 데이터 형식으로 반환
         @JavascriptInterface
         public void getCurrentFamilyTreeInfo(String retJsonData){
             saveCurrentFamilyTreeInfo(retJsonData);
@@ -355,4 +437,7 @@ public class FamilyTreeFragment extends Fragment {
             Log.d("JSONDATA", loadCurrentFamilyTreeInfo());
         }
     }
+
+
+
 }
