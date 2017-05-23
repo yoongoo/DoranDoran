@@ -38,13 +38,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Created by JJY on 2017-04-01.
- */
+
 
 public class MenuActivity extends AppCompatActivity
 {
-
+    private final String LOG_TAG = MenuActivity.class.getSimpleName();
     private BackPressCloseHandler backPressCloseHandler;
 
     @Override
@@ -59,16 +57,21 @@ public class MenuActivity extends AppCompatActivity
 
 
         try{
+            // 푸쉬 이벤트 메세지를 클릭해서 앱을 실행하면 실행 코드를 알아냄
             String requestCode = paramIntent.getExtras().getString("REQUEST_CODE");
 
+            // 사용자가 가계도를 요청한 경우
             if(requestCode.equals(Server.REQUEST_USER_FAMILYTREE)){
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String from_user_id = prefs.getString("user_id", null);
                 String to_user_id = paramIntent.getExtras().getString("FROM_USER");
                 String json_data = loadCurrentFamilyTreeInfo();
 
+                // 사용자에게 가계도 정보를 보냄
                 showSendDialog(from_user_id, to_user_id, json_data);
             }
+
+            Log.d(LOG_TAG, "requestCode : " + requestCode);
         }
         catch(NullPointerException ex){
             Toast.makeText(getApplicationContext(), "요청코드가 없습니다.", Toast.LENGTH_LONG);
