@@ -59,9 +59,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_settings_user"
-            fab:fab_label="추가 모드"
+            fab:fab_label="모드 선택"
             style="@style/MenuButtonsSmall"/>
 
+        <!--
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_familytree_edit_mode"
             android:layout_width="wrap_content"
@@ -69,7 +70,7 @@
             android:src="@drawable/ic_settings_user"
             fab:fab_label="수정 모드"
             style="@style/MenuButtonsSmall"/>
-
+-->
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_familytree_search"
@@ -84,7 +85,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_settings_user"
-            fab:fab_label="가계도 백업"
+            fab:fab_label="현재 가계도 백업"
+            style="@style/MenuButtonsSmall"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_familytree_restore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_user"
+            fab:fab_label="가계도 복구"
             style="@style/MenuButtonsSmall"/>
 
 

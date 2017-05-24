@@ -34,8 +34,8 @@ public class FamilyTreeBackupHelper {
     }
 
     public void getFileNameList(){
-        String dirPath = context.getFilesDir().getAbsolutePath() + "/FamilyTreeBackUp/";
-        File backupDir = new File(dirPath);
+        //String dirPath = context.getFilesDir().getAbsolutePath() + "/FamilyTreeBackUp/";
+        File backupDir =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS + "/FamilyTreeBackUp/");
         File[] fileList = backupDir.listFiles();
 
         registerToMediaScanner(backupDir);

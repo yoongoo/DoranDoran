@@ -207,6 +207,7 @@ public class FamilyTreeFragment extends Fragment {
         String phone    = "";
         String birth    = "";
 
+        // 노드 수정 완료 시
         if(event.getResultCode() == ResultCode.ACK_RESULT_SUCCESS){
             id = event.getData().getExtras().getString("id");
             name = event.getData().getExtras().getString("name");
@@ -217,31 +218,42 @@ public class FamilyTreeFragment extends Fragment {
             birth = event.getData().getExtras().getString("birth");
 
             executeJsFunction("toJS_SetSelecetedMemberInfo", name, age, gender, relation);
+        }
+        // 복구 파일이 선택 되었을 때
+        else if(event.getResultCode() == ResultCode.ACK_READ_RESTORE_DATA){
+            FamilyTreeBackupHelper familyTreeBackupHelper =
+                    new FamilyTreeBackupHelper(getContext());
+            String encryptedData = event.getData().getExtras().getString("RESTORE_DATA");
+            String decryptedData = familyTreeBackupHelper.decryptedMessageFromAES256("1111", encryptedData);
 
-            //Log.d("ACTIVITY_RESULT", id +","+name +"," +age+","+gender+","+relation+","+phone+","+birth);
+            //Log.d(LOG_TAG, "ACK_READ_RESTORE_DATA : " + encryptedData);
+            //Log.d(LOG_TAG, "ACK_READ_RESTORE_DATA : " + decryptedData);
+
+            executeJsFunction("toJS_PrintFamilyTree", decryptedData);
+            Toast.makeText(getContext(), "복구 파일을 불러왔습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
     @OnClick({R.id.fab_familytree_insert_mode,
-            R.id.fab_familytree_edit_mode,
+          //  R.id.fab_familytree_edit_mode,
             R.id.fab_familytree_search,
-            R.id.fab_familytree_backup})
+            R.id.fab_familytree_backup,
+            R.id.fab_familytree_restore})
     public void onFabButtonClicked(View view){
         tb_main_bar.getMenu().clear();
 
         switch (view.getId()){
-            // 노드 추가 모드
+            // 모드 선택
             case R.id.fab_familytree_insert_mode:
-                currentMode = 0;
-                //Toast.makeText(getContext(),"추가 모드 선택", Toast.LENGTH_SHORT).show();
-                tb_main_bar.inflateMenu(R.menu.menu_family_tree);
+                selectModeDialog();
 
                 break;
             // 노드 수정 모드
+            /*
             case R.id.fab_familytree_edit_mode:
-                currentMode = 1;
-                break;
 
+                break;
+            */
             // 가계도 불러오기
             case R.id.fab_familytree_search:
                 //startActivity(new Intent(getActivity(), FamilyTreeSearchActivity.class));
@@ -258,7 +270,7 @@ public class FamilyTreeFragment extends Fragment {
 
                 // AES256 메세지 암, 복호화 - 패스워드 지정 필요
                 String encryptedData = familyTreeBackupHelper.encryptedMessageFromAES256("1111", backupData);
-                String decrpytedData = familyTreeBackupHelper.decryptedMessageFromAES256("1111", encryptedData);
+
 
                 isSucceed = familyTreeBackupHelper.saveBackupFile(encryptedData);
 
@@ -270,22 +282,53 @@ public class FamilyTreeFragment extends Fragment {
                 }
 
                 familyTreeBackupHelper.getFileNameList();
+                break;
 
-
+            case R.id.fab_familytree_restore:
+                Intent intent = new Intent(getContext(), FamilyTreeRestoreActivity.class);
+                startActivity(intent);
                 break;
         }
 
         fam_familytree.close(true);
 
-        wv_familytree.post(new Runnable() {
+        wv_familytree.postDelayed(new Runnable() {
             @Override
             public void run() {
                 Log.d("CALLBACK", "toJS_setFamilyTreeMode is triggered .. ");
+                Log.d("CALLBACK", "currentMode : " + currentMode);
                 wv_familytree.loadUrl("javascript:toJS_setFamilyTreeMode(" + currentMode + ")");
             }
-        });
+        },1000);
     }
 
+    private void selectModeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("모드 선택")
+                .setItems(R.array.mode_select, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, final int which) {
+                        // JavaScript 메서드는 반드시 메인 스레드에서 호출
+                        wv_familytree.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                // 추가 모드
+                                if(which == 0){
+                                    currentMode = 0;
+                                    tb_main_bar.inflateMenu(R.menu.menu_family_tree);
+                                }
+                                // 수정 모드
+                                else if(which == 1){
+                                    currentMode = 1;
+                                }
+
+                                Log.d("CALLBACK", "selectModeDialog() currentMode : " + currentMode);
+                            }
+                        });
+                    }
+                });
+
+        builder.show();
+    }
 
     // 자바스크립트 함수 실행
     public void executeJsFunction(String paramFuncName, Object... params){
