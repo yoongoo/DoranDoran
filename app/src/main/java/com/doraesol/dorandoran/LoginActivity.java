@@ -168,6 +168,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d(LOG_TAG, "login failed : " + connectionResult.getErrorMessage());
     }
 
+
+
+
     class RegisterFcmTokenTask extends AsyncTask<String, Void, Void>{
 
         @Override

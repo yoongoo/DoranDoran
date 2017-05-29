@@ -92,7 +92,11 @@ public class MenuActivity extends AppCompatActivity
         switch (paramView.getId()){
             case R.id.ll_family_tree:   pageNumber = 0; break;
             case R.id.ll_menu_schedule: pageNumber = 1; break;
-            case R.id.ll_menu_search:   pageNumber = 2; break;
+            case R.id.ll_menu_search:
+                // pageNumber = 2;
+                Intent intent2 = new Intent(getApplicationContext(), FamilyTreeSearchActivity.class);
+                startActivity(intent2);
+                return;
             case R.id.ll_menu_settings: pageNumber = 3; break;
         }
         intent.putExtra("page", pageNumber);

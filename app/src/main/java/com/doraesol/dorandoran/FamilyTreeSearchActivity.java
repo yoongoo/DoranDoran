@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class FamilyTreeSearchActivity extends AppCompatActivity {
+
+    private final String LOG_TAG = FamilyTreeSearchActivity.class.getSimpleName();
 
     @BindView(R.id.et_familytree_search) EditText et_familytree_search;
     @BindView(R.id.lv_searched_users)
@@ -56,7 +59,7 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
                 SendMessageToUserTask sendMessageToUserTask = new SendMessageToUserTask();
                 sendMessageToUserTask.execute(from_user_id, to_user_id, "EMPTY");
 
-                Toast.makeText(getApplicationContext(), from_user_id + " , " + to_user_id, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), from_user_id + " , " + to_user_id, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -116,7 +119,8 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
             super.onPostExecute(resultCode);
 
             if(resultCode.equals("1000")){
-                Toast.makeText(getApplicationContext(), "Success !", Toast.LENGTH_LONG).show();
+                Log.d(LOG_TAG,"Success ! !");
+                //Toast.makeText(getApplicationContext(), "Success !", Toast.LENGTH_LONG).show();
             }
 
 
@@ -167,15 +171,20 @@ public class FamilyTreeSearchActivity extends AppCompatActivity {
         protected void onPostExecute(String returnValue) {
             super.onPostExecute(returnValue);
 
-            if(returnValue != null){
+            String[] searched_id_list = returnValue.split("#");
+
+            for(int i=0; i<searched_id_list.length; i++){
+                Log.d(LOG_TAG, searched_id_list[i]);
+            }
+
+
+
+            if(searched_id_list.length >= 1){
                 searchedList.clear();
 
-                searchedList.add(returnValue);
-                /*
-                for(String user : searchedList) {
-                    searchedList.add(user);
+                for(int i=0; i<searched_id_list.length; i++){
+                    searchedList.add(searched_id_list[i]);
                 }
-                */
 
                 adapter.notifyDataSetChanged();
             }

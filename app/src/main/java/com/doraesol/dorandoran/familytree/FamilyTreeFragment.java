@@ -46,10 +46,15 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,7 +98,7 @@ public class FamilyTreeFragment extends Fragment {
             public void run() {
                 String data = loadCurrentFamilyTreeInfo();
                 executeJsFunction("toJS_PrintFamilyTree", data);
-                Toast.makeText(getActivity().getApplicationContext(), "불러오기..", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "불러오기..", Toast.LENGTH_LONG).show();
             }
         }, 1500);
 
@@ -206,6 +211,7 @@ public class FamilyTreeFragment extends Fragment {
         String relation = "";
         String phone    = "";
         String birth    = "";
+        String pictureString = null;
 
         // 노드 수정 완료 시
         if(event.getResultCode() == ResultCode.ACK_RESULT_SUCCESS){
@@ -216,6 +222,13 @@ public class FamilyTreeFragment extends Fragment {
             relation = event.getData().getExtras().getString("relation");
             phone = event.getData().getExtras().getString("phone");
             birth = event.getData().getExtras().getString("birth");
+
+            // 사진 데이터 받아오기
+            if(event.getData().getExtras().getString("picture") != null){
+                pictureString = event.getData().getExtras().getString("picture");
+                // 서버로 프로필 사진 업로드
+                upLoadProfilePicture(pictureString);
+            }
 
             executeJsFunction("toJS_SetSelecetedMemberInfo", name, age, gender, relation);
         }
@@ -271,6 +284,9 @@ public class FamilyTreeFragment extends Fragment {
                 // AES256 메세지 암, 복호화 - 패스워드 지정 필요
                 String encryptedData = familyTreeBackupHelper.encryptedMessageFromAES256("1111", backupData);
 
+                Log.d(LOG_TAG, "가계도 백업 원본 데이터 : " + backupData);
+                Log.d(LOG_TAG, "가계도 백업 암호화 데이터 : " + encryptedData);
+
 
                 isSucceed = familyTreeBackupHelper.saveBackupFile(encryptedData);
 
@@ -302,10 +318,29 @@ public class FamilyTreeFragment extends Fragment {
         },1000);
     }
 
+    private void upLoadProfilePicture(String paramByteArray){
+
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("upload_image", paramByteArray.toString())
+                .build();
+
+        //request
+        Request request = new Request.Builder()
+                .url(Server.UPLOAD_PROFILE_IMAGE)
+                .post(body)
+                .build();
+
+        try {
+            client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void selectModeDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("모드 선택")
-                .setItems(R.array.mode_select, new DialogInterface.OnClickListener() {
+        builder.setItems(R.array.mode_select, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, final int which) {
                         // JavaScript 메서드는 반드시 메인 스레드에서 호출
                         wv_familytree.post(new Runnable() {
@@ -327,7 +362,10 @@ public class FamilyTreeFragment extends Fragment {
                     }
                 });
 
-        builder.show();
+        AlertDialog alert = builder.create();
+        alert.setIcon(R.drawable.ic_list_genogram);
+        alert.setTitle("모드 선택");
+        alert.show();
     }
 
     // 자바스크립트 함수 실행

@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        tv_main_bar_title.setText("가계도");
         //BusProvider.getInstance().register(this);
 
         //sp_schedule_insert = (Spinner)findViewById(R.id.sp_schedule_insert);
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     case 2:
                         //tb_main_bar.setTitle("설정");
-                        tv_main_bar_title.setText("경조사");
+                        tv_main_bar_title.setText("설정");
                         break;
                 }
             }
