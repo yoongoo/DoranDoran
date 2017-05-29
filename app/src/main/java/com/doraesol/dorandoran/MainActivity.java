@@ -2,13 +2,13 @@ package com.doraesol.dorandoran;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,11 +16,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.doraesol.dorandoran.calendar.CalendarMainFragment;
 import com.doraesol.dorandoran.calendar.IconSpinnerAdapter;
-import com.doraesol.dorandoran.setting.SettingFragment;
 import com.doraesol.dorandoran.familytree.FamilyTreeFragment;
+import com.doraesol.dorandoran.setting.SettingFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //R.drawable.ic_list_home,
                 R.drawable.ic_list_genogram,
                 //R.drawable.ic_list_map,
-                R.drawable.ic_list_social,
+                R.drawable.img_main_calendar,
                 R.drawable.ic_list_tool4
         };
 
