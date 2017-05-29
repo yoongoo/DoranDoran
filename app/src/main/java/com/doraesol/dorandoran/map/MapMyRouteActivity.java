@@ -101,6 +101,7 @@ public class MapMyRouteActivity extends AppCompatActivity
     boolean askPermissionOnceAgain = false;
 
     @BindView(R.id.bt_map_recording) Button bt_map_recording;
+    @BindView(R.id.bt_map_save) Button bt_map_save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -128,12 +129,20 @@ public class MapMyRouteActivity extends AppCompatActivity
     }
 
 
-    @OnClick(R.id.bt_map_recording)
-    public void recordButtonClicked()
+    @OnClick({R.id.bt_map_recording, R.id.bt_map_save})
+    public void recordsaveButtonClicked(View view)
     {
-        changeWalkState();
-        String walk = "Walkstate : " + walkState;
-        Log.i("walkstate", walk);
+        switch(view.getId()){
+            case R.id.bt_map_recording:
+                changeWalkState();
+                String walk = "Walkstate : " + walkState;
+                Log.i("walkstate", walk);
+                break;
+            case R.id.bt_map_save:
+                Toast.makeText(MapMyRouteActivity.this, "경로가 저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                Log.i("btclick", "click!");
+                break;
+        }
     }
 
     private void changeWalkState()
