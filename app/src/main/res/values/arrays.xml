@@ -13,4 +13,14 @@
         <item>삭제</item>
     </string-array>
 
+    <string-array name="mode_select">
+        <item>친척 추가 모드</item>
+        <item>친척 수정 모드</item>
+    </string-array>
+
+    <string-array name="mode_profile_img_select">
+        <item>갤러리에서 이미지 선택</item>
+        <item>사진 촬영</item>
+    </string-array>
+
 </resources>

@@ -11,6 +11,7 @@
     toJS_setfamilyTreeMode = toAndroid_setFamilyTreeMode;
     toJS_setSelecetedMemberInfo = toAndroid_setSelecetedMemberInfo;
     toJS_getCurrentFamilyTreeInfo = toAndroid_getCurrentFamilyTreeInfo;
+    toJS_printFamilyTree = toAndroid_getPrintFamilyTree;
 
     // 공유 데이터 
     var rootDiv = '';
@@ -747,6 +748,17 @@
     function toAndroid_SelectedMember(paramMember){
         selectedMember = paramMember;
         self = false;
+    }
+
+
+    function toAndroid_getPrintFamilyTree(json){
+        $('#pk-family-tree').empty();
+
+        $('#pk-family-tree').pk_family_create(
+            {
+                data:json
+            }
+        );
     }
 
 }(jQuery));

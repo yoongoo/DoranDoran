@@ -10,7 +10,10 @@ public class Server {
     public static final String REGISTER_FCM_TOKEN   = SERVER_CONNECTION + "register_fcm.php";
     public static final String GET_USER             = SERVER_CONNECTION + "get_user.php";
     public static final String SEND_MESSAGE_TO_USER = SERVER_CONNECTION + "send_message.php";
-
+    public static final String UPLOAD_PROFILE_IMAGE = SERVER_CONNECTION + "upload_profile_img.php";
     public static final String CONNETION_FAMILYTREE_UI = SERVER_CONNECTION + "familytree/index.html";
-    public static final String CONNETION_GOOGLEMAP_UI = SERVER_CONNECTION + "map/index.html";
+
+    // declare server request code..
+    public static final String REQUEST_USER_FAMILYTREE = "1000";
+    public static final String RESPONSE_USER_FAMILYTREE = "1001";
 }

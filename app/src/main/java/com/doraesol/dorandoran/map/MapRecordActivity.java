@@ -2,41 +2,23 @@ package com.doraesol.dorandoran.map;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebStorage;
 import android.webkit.WebView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.doraesol.dorandoran.R;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URI;
-import com.doraesol.dorandoran.config.Server;
 /**
  * Created by JJY on 2017-04-11.
  */
@@ -69,7 +51,7 @@ public class MapRecordActivity extends AppCompatActivity implements GeolocationP
         geoclient.onGeolocationPermissionsShowPrompt(origin, this);    //for permission
         mapview.addJavascriptInterface(new JJJavaScriptInterface(), "call");
         //mapview.loadUrl(htmlurl);
-        mapview.loadUrl(Server.CONNETION_GOOGLEMAP_UI);
+       /* mapview.loadUrl(Server.CONNETION_GOOGLEMAP_UI);*/
     }
 
     @Override

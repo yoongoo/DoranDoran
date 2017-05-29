@@ -67,7 +67,7 @@
                 android:hint="비밀번호"
                 android:textAlignment="center"
                 android:textColorHint="@color/white"
-
+                android:inputType="textPassword"
                 android:layout_gravity="center"
                 android:background="@null"/>
         </RelativeLayout>
