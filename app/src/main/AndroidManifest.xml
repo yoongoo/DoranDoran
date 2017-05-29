@@ -23,11 +23,11 @@
         <activity
             android:name=".IntroActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -45,15 +45,23 @@
         <activity
             android:name=".map.MapMainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".map.MapMyRouteActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".map.MapCameraGallery"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
         <activity
             android:name=".map.MapListActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

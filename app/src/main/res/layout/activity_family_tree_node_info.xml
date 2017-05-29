@@ -296,19 +296,19 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_family_tree_info_pic"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginLeft="220dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="60dp"
         android:src="@drawable/ic_setting_mypage_camera"
         app:backgroundTint="#d8d8d8"
-        app:layout_anchor="@id/ll_family_tree_info_top"/>
+        app:layout_anchor="@id/ll_family_tree_info_top"
+        app:layout_anchorGravity="bottom|right"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_family_tree_info_graves"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="20dp"
+        android:layout_margin="7dp"
         android:src="@drawable/ic_setting_mypage_graves"
         app:backgroundTint="#d8d8d8"
         app:layout_anchor="@id/ll_family_tree_info_top"

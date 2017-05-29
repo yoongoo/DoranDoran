@@ -41,12 +41,32 @@
             android:id="@+id/map"
             android:layout_weight="0.9"
             android:name="com.google.android.gms.maps.SupportMapFragment" />
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="녹화하기"
-            android:id="@+id/recording"/>
+            android:textSize="25dp"
+            android:background="#54C242"
+            android:id="@+id/bt_map_recording"
+            android:layout_weight="0.45"/>
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:layout_weight="0.01"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경로저장"
+            android:id="@+id/bt_map_save"
+            android:textSize="25dp"
+            android:background="#54C242"
+            android:layout_weight="0.45"/>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

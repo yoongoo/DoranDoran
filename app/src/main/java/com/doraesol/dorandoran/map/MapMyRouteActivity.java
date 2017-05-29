@@ -1,39 +1,43 @@
 package com.doraesol.dorandoran.map;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import com.doraesol.dorandoran.R;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.GeolocationPermissions;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.location.LocationListener;
+
+import com.bumptech.glide.Glide;
+import com.doraesol.dorandoran.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -48,12 +52,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 public class MapMyRouteActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -74,8 +81,15 @@ public class MapMyRouteActivity extends AppCompatActivity
     private LatLng startLatLng = new LatLng(0, 0);        //polyline 시작점
     private LatLng endLatLng = new LatLng(0, 0);        //polyline 끝점
     private List<Polyline> polylines;
-    private Geocoder geocoder = null;
-
+    private Marker marker;
+    //갤러리
+    //private ImageView iv_map_randmark;
+    final int REQUEST_PICTURE = 1000;
+    private final static int SECOND_ACTIVITY = 2;
+    private Uri mUri;
+    private String str;
+    private Uri uri;
+    private Bitmap bitmap;
     //디폴트 위치, Seoul
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
     private static final String TAG = "googlemap";
@@ -86,10 +100,11 @@ public class MapMyRouteActivity extends AppCompatActivity
     private AppCompatActivity mActivity = null;
     boolean askPermissionOnceAgain = false;
 
-    @BindView(R.id.recording) Button recording;
+    @BindView(R.id.bt_map_recording) Button bt_map_recording;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
@@ -103,9 +118,17 @@ public class MapMyRouteActivity extends AppCompatActivity
         ButterKnife.bind(this);
         startLocationService();
         polylines = new ArrayList<>();
+
+
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
     }
 
-    @OnClick(R.id.recording)
+
+    @OnClick(R.id.bt_map_recording)
     public void recordButtonClicked()
     {
         changeWalkState();
@@ -221,7 +244,7 @@ public class MapMyRouteActivity extends AppCompatActivity
         PolylineOptions options = new PolylineOptions()
                 .add(startLatLng)
                 .add(endLatLng)
-                .width(15)
+                .width(4)
                 .color(Color.RED)
                 .geodesic(true);
 
@@ -230,45 +253,125 @@ public class MapMyRouteActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapLongClick(LatLng point)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /*switch (requestCode) {
+
+            case GPS_ENABLE_REQUEST_CODE:
+
+                //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+
+                        if (ActivityCompat.checkSelfPermission(this,
+                                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                            mGoogleMap.setMyLocationEnabled(true);
+                        }
+
+                        return;
+                    }
+                } else {
+                    setCurrentLocation(null, "위치정보 가져올 수 없음", "위치 퍼미션과 GPS 활성 요부 확인하세요");
+                }
+
+                break;
+        }*/
+
+        if (requestCode == REQUEST_PICTURE && resultCode == Activity.RESULT_OK) {
+            Log.d("onActivityResult", "Camera SUCCESS");
+            uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        /*Bundle extraBundle;
+        if (requestCode == RESULT_OK)
+        {
+            extraBundle = data.getExtras();
+            str = extraBundle.getString("uri");
+            mUri = Uri.parse(str);
+        }*/
+
+        }
+    }
+
+
+
+
+    @Override
+    public void onMapLongClick(LatLng point) {
         String st = null;
         List<Address> addresses = new ArrayList<>();
-        geocoder = new Geocoder(this, Locale.getDefault());
-        //마커찍기
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_pmarker));
-        markerOptions.position(point);
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Marker> markers = new ArrayList<Marker>();
+        Marker marker = mGoogleMap.addMarker(new MarkerOptions()
+                .position(point)
+                .title("랜드마크")
+                .snippet("사진을 등록해주세요")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_pmarker)));
+
+        markers.add(marker);
+        for (int i = 0; i < markers.size(); i++) {
+            markers.get(i).showInfoWindow();
+
+        }
 
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(point));
-        mGoogleMap.addMarker(markerOptions);
+        /*mGoogleMap.addMarker(new MarkerOptions()
+                  .position(point)
+                  .title("랜드마크")
+                  .snippet("사진을 등록해주세요.")
+                  .icon(BitmapDescriptorFactory.fromResource(R.drawable.img_map_pmarker)));*/
+
+
+
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
+            @Override
+            public void onInfoWindowClick(Marker marker)
+            {
+                int permissionCheck = ContextCompat.checkSelfPermission(MapMyRouteActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE);
+
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    startGallery();
+                } else {
+                    ActivityCompat.requestPermissions(MapMyRouteActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            2000);
+                }
+            }
+        });
 
         //역지오코딩
-        try
-        {
-            addresses = geocoder.getFromLocation(point.latitude, point.longitude,1);
+        try {
+            addresses = geocoder.getFromLocation(point.latitude, point.longitude, 1);
 
-            if(addresses.size() > 0)
-            {
+            if (addresses.size() > 0) {
                 android.location.Address address = addresses.get(0);
-                st = address.getAddressLine(0)+address.getLocality();
+                st = address.getAddressLine(0) + address.getLocality();
             }
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-        } catch (IllegalArgumentException illegalArgumentException)
-        {
+        } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
         }
 
-        String s = " \" " +st +"\" 입니다. 저장 하시겠습니까?";
+        String s = " \" " + st + "\" 입니다. 저장 하시겠습니까?";
         Snackbar snack = Snackbar.make(findViewById(android.R.id.content), s, 10000)
                 .setActionTextColor(Color.parseColor("#FFFFFF"))
-                .setAction("네", new View.OnClickListener()
-                {
+                .setAction("네", new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         //주소저장
                         Toast toast = Toast.makeText(MapMyRouteActivity.this, "저장 저장~", Toast.LENGTH_SHORT);
                         toast.show();
@@ -276,10 +379,99 @@ public class MapMyRouteActivity extends AppCompatActivity
                 });
         View view = snack.getView();
         view.setBackgroundColor(Color.parseColor("#B354C242"));
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        final TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snack.show();
+
+        mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter()
+        {
+
+            @Override
+            public View getInfoWindow(Marker marker)
+            {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker)
+            {
+                View v = getLayoutInflater().inflate(R.layout.custom_infowindow, null);
+
+                TextView tv_title = (TextView)v.findViewById(R.id.tv_title);
+                tv_title.setTextColor(Color.BLACK);
+                tv_title.setGravity(Gravity.CENTER);
+                tv_title.setTypeface(null, Typeface.BOLD);
+                tv_title.setText(marker.getTitle());
+                tv_title.setSingleLine(false);
+
+                TextView tv_explain = (TextView)v.findViewById(R.id.tv_explain);
+                tv_explain.setTextColor(Color.GRAY);
+                tv_explain.setGravity(Gravity.CENTER);
+                tv_explain.setTypeface(null, Typeface.ITALIC);
+                tv_explain.setText(marker.getSnippet());
+                tv_explain.setSingleLine(false);
+
+                ImageView iv_map_randmark = (ImageView)v.findViewById(R.id.iv_map_randmark);
+                if (uri != null)
+                {
+                    Glide.with(getApplicationContext())
+                            .load(uri)
+                            .centerCrop()
+                            .override(300, 300)
+                            .placeholder(R.drawable.img_cmt_insert_gallery)
+                            .into(iv_map_randmark);
+                    tv_explain.setVisibility(v.GONE);
+                }else   tv_explain.setVisibility(v.VISIBLE);
+
+
+
+
+                return v;
+            }
+
+
+
+        });
     }
+
+
+
+    public void startGallery() {
+        Intent cameraIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        cameraIntent.setType("image/*");
+        if (cameraIntent.resolveActivity(this.getPackageManager()) != null) {
+            startActivityForResult(cameraIntent, REQUEST_PICTURE);
+        }
+    }
+
+    /**
+     * 카메라에서 사진 촬영
+     */
+    /*public void doTakePhotoAction() // 카메라 촬영 후 이미지 가져오기
+    {
+        // 카메라 호출
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+
+        // 이미지 잘라내기 위한 크기
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 0);
+        intent.putExtra("aspectY", 0);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 150);
+
+        try {
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, PICK_FROM_CAMERA);
+        } catch (ActivityNotFoundException e) {
+            // Do nothing for now
+        }
+    }*/
+
+
+
+
 
     private class GPSListener implements LocationListener
     {
@@ -627,37 +819,11 @@ public class MapMyRouteActivity extends AppCompatActivity
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
 
-            case GPS_ENABLE_REQUEST_CODE:
 
-                //사용자가 GPS 활성 시켰는지 검사
-                if (checkLocationServicesStatus()) {
-                    if (checkLocationServicesStatus()) {
 
-                        if (mGoogleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
 
-                        if (ActivityCompat.checkSelfPermission(this,
-                                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                            mGoogleMap.setMyLocationEnabled(true);
-                        }
-
-                        return;
-                    }
-                } else {
-                    setCurrentLocation(null, "위치정보 가져올 수 없음", "위치 퍼미션과 GPS 활성 요부 확인하세요");
-                }
-
-                break;
-        }
-    }
 
 
     @Override
